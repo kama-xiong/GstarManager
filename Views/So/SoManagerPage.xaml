@@ -1,0 +1,78 @@
+﻿<Page x:Class="GstarManager.Views.So.SoManagerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:GstarManager.Views.So"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="SoManagerPage">
+
+    <Grid>
+        <DockPanel>
+            <ToolBar DockPanel.Dock="Top" Height="32">
+                <Button Name="Add" Click="add" >
+                    <StackPanel Orientation="Horizontal" >
+                        <Image Source="/Images/new doc.png" ></Image>
+                        <TextBlock Margin="3,2,0,0" >新增</TextBlock>
+                    </StackPanel>                    
+                </Button>
+                <Button Name="Retrieve" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Images/open alt.png"></Image>
+                        <TextBlock Margin="3,2,0,0">查看</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Name="Update" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Images/Edit.png"></Image>
+                        <TextBlock Margin="3,2,0,0">修改</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Button Name="Delete" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Images/Delete.png"></Image>
+                        <TextBlock Margin="3,2,0,0">删除</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Separator/>
+                <Button Name="Exit" >
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Images/Stop.png"></Image>
+                        <TextBlock Margin="3,2,0,0">退出</TextBlock>
+                    </StackPanel>
+                </Button>
+                <Separator/>
+                <Label Content="每页显示" HorizontalAlignment="Right"/>
+                <ComboBox Name="pageNumber" Width="50"  SelectedIndex="0">
+                    <ComboBoxItem Content="100" />
+                    <ComboBoxItem Content="150"/>
+                    <ComboBoxItem Content="300"/>
+                </ComboBox>
+
+            </ToolBar>
+            <Grid DockPanel.Dock="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60"></ColumnDefinition>
+                    <ColumnDefinition Width="150"></ColumnDefinition>
+                    <ColumnDefinition Width="40"></ColumnDefinition>
+                    <ColumnDefinition Width="400"></ColumnDefinition> 
+                </Grid.ColumnDefinitions>
+                <Label Content="查找" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right"/>
+                <ComboBox Name="Combo_lookFor" Grid.Row="1" Grid.Column="1" Width="150" HorizontalAlignment="Left"/>
+                <Label Content="内容" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" Width="40"/>
+                <TextBox Name="TextBox_lookFor" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Width="300"/>                
+                <Label Content="模糊查找" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right"/>
+                <TextBox Name="TextBox_mhlookFor" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Width="490" />
+            </Grid>
+            <ListView Name="listView">
+
+            </ListView>
+        </DockPanel>
+        
+    </Grid>
+</Page>

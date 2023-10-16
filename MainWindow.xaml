@@ -1,0 +1,56 @@
+﻿<Window x:Class="GstarManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GstarManager"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="1000" WindowStartupLocation="CenterScreen">
+    <Grid>
+        
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="销售" >
+                    <MenuItem Header="线索"/>
+                    <MenuItem Header="询价"/>
+                    <Separator/>
+                    <MenuItem Header="订单" Click="SalesOrderManager"/>
+                    <MenuItem Header="订单报表"/>
+                    <Separator/>
+                    <MenuItem Header="客户" Click="CustomerManager"/>                    
+                    <MenuItem Header="客户联系人" Click="CustomerContactsManager"/>                    
+                    <MenuItem Header="客户物料"/>
+                    <MenuItem Header="客户分析报表"/>
+                </MenuItem>
+                <MenuItem Header="数据中心" >
+                    <MenuItem Header="初始数据库..." Click="InitialDataBase"/>
+                </MenuItem>
+                <MenuItem Header="系统" ></MenuItem>
+                
+            </Menu>
+            <StatusBar DockPanel.Dock="Bottom">
+                <StatusBarItem Content="状态"/>
+            </StatusBar>
+            <TreeView DockPanel.Dock="Left" Width="150" >
+                <TreeViewItem Header="销售">
+                    <TreeViewItem Header="线索"/>
+                    <TreeViewItem Header="询价"/>
+                    <TreeViewItem Header="订单"/>
+                    <TreeViewItem Header="报表"/>
+                </TreeViewItem>
+                <TreeViewItem Header="数据中心">
+                    
+                </TreeViewItem>
+            </TreeView>
+
+            <TabControl  Name="mainTabControl" >
+                <TabItem Header="首页"/>
+            </TabControl>
+            
+
+
+        </DockPanel>
+        
+        
+    </Grid>
+</Window>

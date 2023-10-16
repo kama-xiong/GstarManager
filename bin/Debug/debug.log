@@ -1,0 +1,35 @@
+[1016/211223.381:WARNING:policy_logger.cc(148)] :components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc(88) Could not create policy manager as CBCM is not enabled.
+[1016/211433.461:WARNING:policy_logger.cc(148)] :components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc(88) Could not create policy manager as CBCM is not enabled.
+[1016/211628.123:WARNING:policy_logger.cc(148)] :components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc(88) Could not create policy manager as CBCM is not enabled.
+[1016/211629.362:WARNING:frame_impl.cc(420)] SendProcessMessage sent to detached frame 21474836481 [5,1] will be ignored
+[1016/211629.590:INFO:CONSOLE(329)] "这是一个最好的时代，
+科技的发展给予了每个人创造价值的可能性；
+这也是一个最充满想象的时代，
+每一位心怀梦想的人，终会奔向星辰大海。
+百度与你们一起仰望星辰大海，携手共筑未来！
+", source: https://pss.bdstatic.com/r/www/cache/static/protocol/https/global/js/all_async_search_70e96e2.js (329)
+[1016/211629.590:INFO:CONSOLE(329)] "%c百度2023校园招聘简历投递：https://talent.baidu.com/jobs/list color:red", source: https://pss.bdstatic.com/r/www/cache/static/protocol/https/global/js/all_async_search_70e96e2.js (329)
+[1016/211637.773:WARNING:dxgi_swap_chain_image_backing.cc(208)] First draw to surface should draw to everything
+[1016/211638.118:INFO:CONSOLE(3)] "[object HTMLIFrameElement]", source: https://map-mobile-static.cdn.bcebos.com/jssdk/mapLogReport/MapLogReport.min.js?t=20220719 (3)
+[1016/211638.119:WARNING:browser_info.cc(309)] Returning a speculative frame for 34359738373 [8,5]
+[1016/211638.128:INFO:CONSOLE(0)] "[Report Only] Refused to frame '' because it violates the following Content Security Policy directive: "default-src https: data: blob:". Note that 'frame-src' was not explicitly set, so 'default-src' is used as a fallback.
+", source: https://map-mobile-static.cdn.bcebos.com/ (0)
+[1016/211638.138:WARNING:browser_info.cc(309)] Returning a speculative frame for 34359738373 [8,5]
+[1016/211638.760:WARNING:frame_impl.cc(420)] SendProcessMessage sent to detached frame 30064771082 [7,10] will be ignored
+[1016/211638.760:WARNING:frame_impl.cc(420)] SendProcessMessage sent to detached frame 30064771082 [7,10] will be ignored
+[1016/211638.796:WARNING:frame_impl.cc(420)] SendProcessMessage sent to detached frame 30064771083 [7,11] will be ignored
+[1016/211638.796:WARNING:frame_impl.cc(420)] SendProcessMessage sent to detached frame 30064771083 [7,11] will be ignored
+[1016/211642.260:WARNING:dxgi_swap_chain_image_backing.cc(208)] First draw to surface should draw to everything
+[1016/211642.814:INFO:CONSOLE(329)] "这是一个最好的时代，
+科技的发展给予了每个人创造价值的可能性；
+这也是一个最充满想象的时代，
+每一位心怀梦想的人，终会奔向星辰大海。
+百度与你们一起仰望星辰大海，携手共筑未来！
+", source: https://pss.bdstatic.com/r/www/cache/static/protocol/https/global/js/all_async_search_70e96e2.js (329)
+[1016/211642.814:INFO:CONSOLE(329)] "%c百度2023校园招聘简历投递：https://talent.baidu.com/jobs/list color:red", source: https://pss.bdstatic.com/r/www/cache/static/protocol/https/global/js/all_async_search_70e96e2.js (329)
+[1016/211643.051:INFO:CONSOLE(89)] "Listener added for a synchronous 'DOMNodeInserted' DOM Mutation Event. This event type is deprecated (https://w3c.github.io/uievents/#legacy-event-types) and work is underway to remove it from this browser. Usage of this event listener will cause performance issues today, and represents a risk of future incompatibility. Consider using MutationObserver instead.", source: https://pss.bdstatic.com/r/www/cache/static/protocol/https/jquery/jquery-1.10.2.min_65682a2.js (89)
+[1016/211647.282:WARNING:dxgi_swap_chain_image_backing.cc(208)] First draw to surface should draw to everything
+[1016/211647.947:INFO:CONSOLE(0)] "Uncaught (in promise) #<Object>", source: https://pan.baidu.com/?from=1026962h (0)
+[1016/211647.958:INFO:CONSOLE(0)] "Uncaught (in promise) #<Object>", source: https://pan.baidu.com/?from=1026962h (0)
+[1016/211648.022:INFO:CONSOLE(33)] "Uncaught (in promise) #<Object>", source: https://nd-static.bdstatic.com/m-static/wp-brand/js/chunk-vendors.4fae6f79.js (33)
+[1016/211652.969:INFO:CONSOLE(139)] "Listener added for a synchronous 'DOMNodeInserted' DOM Mutation Event. This event type is deprecated (https://w3c.github.io/uievents/#legacy-event-types) and work is underway to remove it from this browser. Usage of this event listener will cause performance issues today, and represents a risk of future incompatibility. Consider using MutationObserver instead.", source: https://pss.bdstatic.com/static/superman/js/lib/jquery-1-edb203c114.10.2.js (139)
