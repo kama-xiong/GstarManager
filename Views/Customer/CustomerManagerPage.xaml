@@ -166,7 +166,9 @@
                                     </Button>
 
                                 </ToolBar>
-                                <DataGrid Name="ContactList"  AutoGenerateColumns="False" Width="Auto" MaxWidth="700">
+                                <DataGrid Name="ContactList"  AutoGenerateColumns="False" Width="Auto" MaxWidth="700" SelectionMode="Single" 
+                                          SelectionChanged="ContactList_SelectionChanged" IsReadOnly="True"
+                                          MouseDoubleClick="ContactList_MouseDoubleClick">
                                     <DataGrid.Columns >
                                         <DataGridTextColumn Header="Id" Binding="{Binding C_Id}" Width="80" Visibility="Hidden"/>
                                         <DataGridTextColumn Header="姓名" Binding="{Binding C_Name}" Width="80"/>

@@ -311,5 +311,23 @@ namespace GstarManager.Views.So
         {
 
         }
+
+        private void ContactList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var grid = sender as DataGrid;
+            var item = grid.SelectedItem as Models.Contact;
+            if (item != null)
+            {
+                OnRetrieveContact(sender, e);
+            }
+        }
+
+        private void ContactList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //var grid = sender as DataGrid;
+            //var item = grid.SelectedItem as Models.Contact;
+            //ContactList.ItemsSource = null;           
+
+        }
     }
 }

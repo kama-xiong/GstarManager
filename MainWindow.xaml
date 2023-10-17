@@ -25,7 +25,7 @@
                 <MenuItem Header="数据中心" >
                     <MenuItem Header="初始数据库..." Click="InitialDataBase"/>
                 </MenuItem>
-                <MenuItem Header="系统" ></MenuItem>
+                <MenuItem Header="系统" Click="OnSystemClick"></MenuItem>
                 
             </Menu>
             <StatusBar DockPanel.Dock="Bottom">

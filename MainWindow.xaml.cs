@@ -17,6 +17,7 @@ using System.IO;
 using GstarManager.Models;
 using SqlSugar;
 using GstarManager.Views.So;
+using GstarManager.Controllers;
 
 namespace GstarManager
 {
@@ -61,6 +62,21 @@ namespace GstarManager
         private void CustomerContactsManager(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+       
+
+        private void OnSystemClick(object sender, RoutedEventArgs e)
+        {
+            TestController<Customer> c=new TestController<Customer>();
+            var cus = new Customer() { Code = "812", Name = "998" };
+            c.Insert(cus);
+         
         }
     }
 }
