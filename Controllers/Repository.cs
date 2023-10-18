@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GstarManager
+namespace GstarManager.Controllers
 {
     /// <summary>
     /// 创建仓储

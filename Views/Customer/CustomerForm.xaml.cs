@@ -32,14 +32,18 @@ namespace GstarManager.Views.Customer
         {
             var c = new Models.Customer();
             c.Type = type.Text.Trim();
+            
             c.Code = Code.Text.Trim();
-            c.Name = Name.Text.Trim(); 
+            c.Name = CName.Text.Trim(); 
             c.Tel = Tel.Text.Trim();
             c.Fax= Fax.Text.Trim();
             c.Email= Email.Text.Trim();
             c.Address= Address.Text.Trim();
             c.City = City.Text;
             c.Province= Province.Text.Trim();
+            //var currentitem = Combo_lookFor.SelectedItem as ComboBoxItem;
+            var curCountryItem=type.SelectedItem as ComboBoxItem;
+            c.Country = curCountryItem.Content.ToString();
             c.Country= Country.Text.Trim();
             c.Postcode= Postcode.Text.Trim();
             c.MainContact= MainContact.Text.Trim();
@@ -61,7 +65,7 @@ namespace GstarManager.Views.Customer
         {
             type.Text = c.Type;
             Code.Text=c.Code;
-            Name.Text=c.Name;
+            CName.Text=c.Name;
             Tel.Text=c.Tel;
             Fax.Text=c.Fax;
             Email.Text=c.Email;
@@ -94,9 +98,9 @@ namespace GstarManager.Views.Customer
                 Code.Background = Brushes.Pink;
                 result = false;               
             }
-            if (Name.Text.Trim().Length == 0)
+            if (CName.Text.Trim().Length == 0)
             {
-                Name.Background = Brushes.Pink;
+                CName.Background = Brushes.Pink;
                 result = false;
             }
             return result;                

@@ -71,12 +71,6 @@ namespace GstarManager
 
        
 
-        private void OnSystemClick(object sender, RoutedEventArgs e)
-        {
-            TestController<Customer> c=new TestController<Customer>();
-            var cus = new Customer() { Code = "812", Name = "998" };
-            c.Insert(cus);
-         
-        }
+       
     }
 }

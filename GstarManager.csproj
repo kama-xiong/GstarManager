@@ -122,10 +122,9 @@
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\IBaseController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Dictionary.cs" />
-    <Compile Include="Repository.cs" />
+    <Compile Include="Controllers\Repository.cs" />
     <Compile Include="SqlClient.cs" />
     <Compile Include="Views\Customer\CustomerForm.xaml.cs">
       <DependentUpon>CustomerForm.xaml</DependentUpon>

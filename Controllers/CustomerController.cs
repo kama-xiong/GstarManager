@@ -9,25 +9,10 @@ using SqlSugar;
 
 namespace GstarManager.Controllers
 {
-    public class CustomerController : IBaseController<Customer>
+    public class CustomerController : Repository<Customer>
     {
                 
-        public Customer Create(Customer entity)
-        {
-            return SqlClient.Db.Insertable(entity).ExecuteReturnEntity();
-        }
-
-        public bool Delete(Customer entity)
-        {
-            return SqlClient.Db.Deleteable(entity).ExecuteCommandHasChange();
-        }
-
-        public Customer GetById(int id)
-        {
-            return SqlClient.Db.Queryable<Customer>().Where(it => it.Id == id).First();           
-            
-        }
-
+       
         public int GetCount()
         {
             return SqlClient.Db.Queryable<Models.Customer>().Count();
@@ -69,10 +54,6 @@ namespace GstarManager.Controllers
             
 
         }
-
-        public bool Update(Customer entity)
-        {
-            return SqlClient.Db.Updateable(entity).ExecuteCommandHasChange();
-        }
+       
     }
 }

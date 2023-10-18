@@ -3,6 +3,7 @@ using GstarManager.Models;
 using GstarManager.Views.Customer;
 using SqlSugar.Extensions;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -26,24 +27,39 @@ namespace GstarManager.Views.So
     /// </summary>
     public partial class CustomerManagerPage : Page
     {
+        
         private CustomerController _control;
         private TabControl _parenttab;
         private int _totalCount = 0;
         private int _pageSize = 0;
         private int _pageNumber = 1;
         private int _totalPage = 0;
-        private ICommand lookFor_Changed;
+        /// <summary>
+        /// 0 表示显示普通清单
+        /// 1 表示显示模湖查找清单
+        /// 2 表示显示精确查找清单
+        /// </summary>
+        private int curListFlag=0;
+        private int curSearchType = 0;     
+        
+        
         public CustomerManagerPage(TabControl parenttab)
         {
-            _control = new CustomerController();
-            _parenttab = parenttab;
-            InitializeComponent();            
-            _pageSize = getPageSize();    
-            setDataGridDataAsc();
-            setPaginationControl();
-            setComboLookFor();
             
+        _control = new CustomerController();
+            _parenttab = parenttab;            
+            InitializeComponent();
+            setComboLookFor();
+            _pageSize = pageSize.Text.Trim().ObjToInt();
+            //setDataGridDataAsc();
+            //setPaginationControl();
+            setDataGridData(curSearchType);            
+            CustomerList.LoadingRow += (se, e) => e.Row.Header = e.Row.GetIndex() + 1 + (_pageNumber - 1) * _pageSize;
+
         }
+        /// <summary>
+        /// 设置精确查找comboBox 选项内容，从字典中获取
+        /// </summary>
         private void setComboLookFor()
         {
             var items=_control.getDictionary("combo_lookfor");
@@ -58,41 +74,64 @@ namespace GstarManager.Views.So
                     Combo_lookFor.SelectedItem = comboBoxItem;
                 }
             }
-            
-            
-           
-
         }
+        /// <summary>
+        /// 重新计算分页控件并更新
+        /// </summary>
         private void setPaginationControl()
         {
             rCurrent.Text = _pageNumber.ToString();
             _totalPage = Math.Ceiling(Convert.ToDouble(_totalCount) / Convert.ToDouble(_pageSize)).ObjToInt(); 
             rTotal.Text = _totalPage.ToString();
-            rTotalListCount.Text=_totalCount.ToString();
+            rTotalListCount.Text=_totalCount.ToString();            
         } 
+        /// <summary>
+        /// 获得当前分页大小
+        /// </summary>
+        /// <returns></returns>       
        
-        private int getPageSize()
+       
+        /// <summary>
+        /// 按增序设置当前客户清单数据 CustomerList
+        /// </summary>
+        //private void setDataGridDataAsc()
+        //{            
+        //    var list = _control.GetPageListAsc(_pageNumber,_pageSize,ref _totalCount);
+        //    rTotal.Text=_totalCount.ToString();
+        //    rCurrent.Text = _pageNumber.ToString();
+        //    setItemSource(list);
+        //    curListFlag = 0;
+            
+        //}
+        private void setDataGridData(int searchType)
         {
+            var c = new CustomerController();
+            var list = new List<Models.Customer>();
+            switch (searchType)
+            {
+                case 0:
+                    list = c.GetPageListAsc(_pageNumber, _pageSize, ref _totalCount);
+                    break;
+                case 1:
+                    var mhlook = TextBox_mhlookFor.Text.Trim();
+                    list = c.Search(mhlook, _pageNumber, _pageSize, ref _totalCount);
 
-            return pageSize.Text.Trim().ObjToInt();
-            
-        }
-       
-        private void setDataGridDataAsc()
-        {            
-            var list = _control.GetPageListAsc(_pageNumber,_pageSize,ref _totalCount);
-            rTotal.Text=_totalCount.ToString();
-            rCurrent.Text = _pageNumber.ToString();
+                    break;
+                case 2:
+                    var lookfor = TextBox_lookFor.Text.Trim();
+                    var currentitem = Combo_lookFor.SelectedItem as ComboBoxItem;
+                    var fieldName = currentitem.Tag.ToString();
+                    list = c.SearchByField(fieldName, lookfor, _pageNumber, _pageSize, ref _totalCount);
+                    break;
+            }
             setItemSource(list);
-            
+            setPaginationControl();
+
         }
-        private void setDataGridDataDesc()
-        {
-            var list = _control.GetPageListDesc(_pageNumber, _pageSize, ref _totalCount);
-            rTotal.Text = _totalCount.ToString();
-            rCurrent.Text = _pageNumber.ToString();
-            setItemSource(list);
-        }
+        /// <summary>
+        /// 依据数据设置DataGrid数据
+        /// </summary>
+        /// <param name="customers"></param>
 
         private void setItemSource(List<Models.Customer> customers)
         {
@@ -108,8 +147,8 @@ namespace GstarManager.Views.So
             {
                 var c = form.GetData();
                 var control = new CustomerController();
-                control.Create(c);
-                setDataGridDataAsc();
+                control.Insert(c);                
+                setDataGridData(curSearchType);                
             }
         }
 
@@ -160,6 +199,8 @@ namespace GstarManager.Views.So
             var grid = sender as DataGrid;
             var item = grid.SelectedItem as Models.Customer;
             ContactList.ItemsSource = null;
+            if (item==null)
+                return;
             if (item.Contacts.Count != 0)
             {
                 
@@ -187,7 +228,7 @@ namespace GstarManager.Views.So
                         MessageBox.Show("更新客户资料出错，请通知管理员");
                         return;
                     }
-                    setDataGridDataAsc();
+                    setDataGridData(curSearchType);
                 }
             }
         }
@@ -203,7 +244,8 @@ namespace GstarManager.Views.So
                         MessageBox.Show("删除数据错误，请联系管理员");
                         return;
                     }
-                    setDataGridDataAsc();
+                    setDataGridData(curSearchType);
+                    
 
                 }
                
@@ -219,9 +261,8 @@ namespace GstarManager.Views.So
             {                
                 _pageNumber = _totalPage;
             }
-            
-            setPaginationControl();
-            setDataGridDataAsc();
+
+            setDataGridData(curSearchType);
         }
 
         private void PreviousPageButton_Click(object sender, RoutedEventArgs e)
@@ -232,9 +273,8 @@ namespace GstarManager.Views.So
                 
                 _pageNumber = 1;
 
-            }            
-            setPaginationControl();
-            setDataGridDataAsc();
+            }
+            setDataGridData(curSearchType);
         }
 
         private void LastPageButton_Click(object sender, RoutedEventArgs e)
@@ -243,8 +283,7 @@ namespace GstarManager.Views.So
                 return;
             }
             _pageNumber = _totalPage==0?1:_totalPage;
-            setPaginationControl();
-            setDataGridDataAsc();
+            setDataGridData(curSearchType);
         }
 
         private void FirstPageButton_Click(object sender, RoutedEventArgs e)
@@ -252,9 +291,8 @@ namespace GstarManager.Views.So
             if (_pageNumber == 1){
                 return;
             }
-            _pageNumber = 1;           
-            setPaginationControl();
-            setDataGridDataAsc();
+            _pageNumber = 1;
+            setDataGridData(curSearchType);
 
         }
 
@@ -269,13 +307,8 @@ namespace GstarManager.Views.So
         {
             if(e.Key== Key.Enter)
             {
-                TextBox_mhlookFor.Clear();
-                var lookfor = TextBox_lookFor.Text.Trim();
-                var currentitem = Combo_lookFor.SelectedItem as ComboBoxItem;
-                var fieldName = currentitem.Tag.ToString();
-                var list = _control.SearchByField(fieldName, lookfor, _pageNumber, _pageSize, ref _totalCount);
-                rTotal.Text = _totalCount.ToString();
-                setItemSource(list);
+                curSearchType = 2;
+                setDataGridData(curSearchType);
             }
         }
 
@@ -283,14 +316,54 @@ namespace GstarManager.Views.So
         {
             if(e.Key== Key.Enter)
             {
-                TextBox_lookFor.Clear();
-                var mhlook = TextBox_mhlookFor.Text.Trim();
-                var list = _control.Search(mhlook, _pageNumber, _pageSize, ref _totalCount);
-                rTotal.Text = _totalCount.ToString();
-                setItemSource(list);
+                curSearchType = 1;
+                setDataGridData(curSearchType);
+
             }
             
         }
+        //private void mhSearch()
+        //{
+        //    TextBox_lookFor.Clear();
+        //    var mhlook = TextBox_mhlookFor.Text.Trim();
+        //    if (mhlook.Length != 0)
+        //    {
+        //        var list = _control.Search(mhlook, _pageNumber, _pageSize, ref _totalCount);
+        //        rTotal.Text = _totalCount.ToString();
+        //        setItemSource(list);
+        //        curListFlag = 1;
+        //    }
+        //    else
+        //    {
+        //        setDataGridDataAsc();
+        //        curListFlag = 0;
+        //    }
+
+        //    setPaginationControl();
+
+        //}
+        //private void exactSearch()
+        //{
+        //    TextBox_mhlookFor.Clear();
+        //    var lookfor = TextBox_lookFor.Text.Trim();
+        //    if (lookfor.Length > 0)
+        //    {
+        //        var currentitem = Combo_lookFor.SelectedItem as ComboBoxItem;
+        //        var fieldName = currentitem.Tag.ToString();
+        //        var list = _control.SearchByField(fieldName, lookfor, _pageNumber, _pageSize, ref _totalCount);
+        //        rTotal.Text = _totalCount.ToString();
+        //        setItemSource(list);
+        //        curListFlag = 2;
+        //    }
+        //    else
+        //    {
+        //        setDataGridDataAsc();
+        //        curListFlag = 0;
+        //    }
+
+        //    setPaginationControl();
+
+        //}
 
         private void OnCreateContact(object sender, RoutedEventArgs e)
         {
@@ -328,6 +401,44 @@ namespace GstarManager.Views.So
             //var item = grid.SelectedItem as Models.Contact;
             //ContactList.ItemsSource = null;           
 
+        }
+
+        private void pageSize_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ///保证第一次不调用该函数
+            if (_pageSize == 0)
+                return;
+            var cuItem = pageSize.SelectedItem as ComboBoxItem;
+            _pageSize = cuItem.Content.ObjToInt();
+            setDataGridData(curSearchType);
+
+            //var cuItem = pageSize.SelectedItem as ComboBoxItem;
+            //_pageSize = cuItem.Content.ObjToInt();
+            
+            //switch (curListFlag)
+            //{
+            //    case 0:
+            //        setDataGridDataAsc();                   
+            //        break;
+            //    case 1:
+            //        mhSearch();
+            //        break;
+            //    case 2:
+            //        exactSearch();
+            //        break;
+            //    default:
+            //        setPaginationControl();
+            //        break;
+
+            //}
+        }
+
+        private void ClearAllRequires_Click(object sender, RoutedEventArgs e)
+        {
+            TextBox_lookFor.Clear();
+            TextBox_mhlookFor.Clear();
+            curSearchType = 0;
+            setDataGridData(curSearchType);
         }
     }
 }

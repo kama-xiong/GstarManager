@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GstarManager.Views.So" 
       mc:Ignorable="d" 
-      d:DesignHeight="750" d:DesignWidth="800"
+      d:DesignHeight="750" d:DesignWidth="1000"
       Title="CustomerManagerPage" FontSize="14">
 
     <Grid>
@@ -45,10 +45,10 @@
                 </Button>
                 <Separator/>
                 <Label Content="每页显示" HorizontalAlignment="Right"/>
-                <ComboBox Name="pageSize" Width="50"  SelectedIndex="0" IsEditable="False">
-                    <ComboBoxItem Content="100" />
-                    <ComboBoxItem Content="150"/>
-                    <ComboBoxItem Content="300"/>
+                <ComboBox Name="pageSize" Width="50"  SelectedIndex="0" IsEditable="False" SelectionChanged="pageSize_SelectionChanged">
+                    <ComboBoxItem Content="20" />
+                    <ComboBoxItem Content="40"/>
+                    <ComboBoxItem Content="60"/>
                 </ComboBox>
 
             </ToolBar>
@@ -61,19 +61,19 @@
                     <ColumnDefinition Width="80"></ColumnDefinition>
                     <ColumnDefinition Width="150"></ColumnDefinition>
                     <ColumnDefinition Width="40"></ColumnDefinition>
-                    <ColumnDefinition Width="400"></ColumnDefinition>
+                    <ColumnDefinition Width="300"></ColumnDefinition>
+                    <ColumnDefinition Width="80"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Label Content="查找" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right"/>
-                <ComboBox Name="Combo_lookFor" Grid.Row="1" Grid.Column="1" Width="150" HorizontalAlignment="Left"  SelectionChanged="Combo_lookFor_SelectionChanged">
-                    
+                <ComboBox Name="Combo_lookFor" Grid.Row="1" Grid.Column="1" Width="150" HorizontalAlignment="Left"  SelectionChanged="Combo_lookFor_SelectionChanged">                    
                 </ComboBox>
                 <Label Content="内容" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" Width="40" />
-                <TextBox Name="TextBox_lookFor" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Width="300"  KeyDown="TextBox_lookFor_KeyDown">
-                   
+                <TextBox Name="TextBox_lookFor" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Width="300"  KeyDown="TextBox_lookFor_KeyDown">                   
                 </TextBox>
                 
                 <Label Content="模糊查找" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" />
                 <TextBox Name="TextBox_mhlookFor" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Width="490" KeyDown="TextBox_mhlookFor_KeyDown" />
+                    <Button x:Name="ClearAllRequires"  Grid.Row="0" Grid.Column="5" Grid.RowSpan="2" Margin="5,0,0,0" Click="ClearAllRequires_Click">清除条件</Button>
             </Grid>          
             <Grid DockPanel.Dock="Top" Margin="0,5,0,5" Height="25">
                 <StackPanel Orientation="Horizontal">
@@ -119,23 +119,27 @@
             </Grid>
             <Grid DockPanel.Dock="Bottom">
                 <DockPanel>
-                    <DataGrid DockPanel.Dock="Top" Name="CustomerList" AutoGenerateColumns="False" SelectionMode="Single" 
+                        <ScrollViewer Height="505" DockPanel.Dock="Top">
+                            <DataGrid DockPanel.Dock="Top" Name="CustomerList" AutoGenerateColumns="False" SelectionMode="Single" 
                               MouseDoubleClick="CustomerList_MouseDoubleClick" SelectionChanged="CustomerList_SelectionChanged"
                               IsReadOnly="True" Height="Auto" MinHeight="350" >
-                        <DataGrid.Columns >
-                            <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="80" Visibility="Hidden"/>
-                            <DataGridTextColumn Header="类别" Binding="{Binding Type}" Width="100"/>
-                            <DataGridTextColumn Header="客号" Binding="{Binding Code}" Width="80"/>
-                            <DataGridTextColumn Header="客户名称" Binding="{Binding Name}" Width="150"/>
-                            <DataGridTextColumn Header="国家" Binding="{Binding Country}" Width="80"/>
-                            <DataGridTextColumn Header="主要联系人" Binding="{Binding MainContact}" Width="100"/>
-                            <DataGridTextColumn Header="联系电话" Binding="{Binding Phone}" Width="100"/>
-                            <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="100"/>
-                            <DataGridTextColumn Header="网址" Binding="{Binding WebSite}" Width="*"  CanUserResize="True"/>
-                            <!--<DataGridTextColumn Header="地址" Binding="{Binding Address}" Width="*"  CanUserResize="True" />-->
+                                <DataGrid.Columns >
+                                    <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="80" Visibility="Hidden"/>
+                                    <DataGridTextColumn Header="类别" Binding="{Binding Type}" Width="100"/>
+                                    <DataGridTextColumn Header="客号" Binding="{Binding Code}" Width="80"/>
+                                    <DataGridTextColumn Header="客户名称" Binding="{Binding Name}" Width="150"/>
+                                    <DataGridTextColumn Header="国家" Binding="{Binding Country}" Width="80"/>
+                                    <DataGridTextColumn Header="主要联系人" Binding="{Binding MainContact}" Width="100"/>
+                                    <DataGridTextColumn Header="联系电话" Binding="{Binding Phone}" Width="100"/>
+                                    <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="100"/>
+                                    <DataGridTextColumn Header="税务" Binding="{Binding Tax}" Width="100"/>
+                                    <DataGridTextColumn Header="网址" Binding="{Binding WebSite}" Width="*"  CanUserResize="True"/>
+                                    <!--<DataGridTextColumn Header="地址" Binding="{Binding Address}" Width="*"  CanUserResize="True" />-->
 
-                        </DataGrid.Columns>
-                    </DataGrid>                    
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </ScrollViewer>
+                                     
                         <DockPanel >
                             <StackPanel Orientation="Vertical" DockPanel.Dock="Left">
                                 <ToolBar  Height="32">
