@@ -321,49 +321,7 @@ namespace GstarManager.Views.So
 
             }
             
-        }
-        //private void mhSearch()
-        //{
-        //    TextBox_lookFor.Clear();
-        //    var mhlook = TextBox_mhlookFor.Text.Trim();
-        //    if (mhlook.Length != 0)
-        //    {
-        //        var list = _control.Search(mhlook, _pageNumber, _pageSize, ref _totalCount);
-        //        rTotal.Text = _totalCount.ToString();
-        //        setItemSource(list);
-        //        curListFlag = 1;
-        //    }
-        //    else
-        //    {
-        //        setDataGridDataAsc();
-        //        curListFlag = 0;
-        //    }
-
-        //    setPaginationControl();
-
-        //}
-        //private void exactSearch()
-        //{
-        //    TextBox_mhlookFor.Clear();
-        //    var lookfor = TextBox_lookFor.Text.Trim();
-        //    if (lookfor.Length > 0)
-        //    {
-        //        var currentitem = Combo_lookFor.SelectedItem as ComboBoxItem;
-        //        var fieldName = currentitem.Tag.ToString();
-        //        var list = _control.SearchByField(fieldName, lookfor, _pageNumber, _pageSize, ref _totalCount);
-        //        rTotal.Text = _totalCount.ToString();
-        //        setItemSource(list);
-        //        curListFlag = 2;
-        //    }
-        //    else
-        //    {
-        //        setDataGridDataAsc();
-        //        curListFlag = 0;
-        //    }
-
-        //    setPaginationControl();
-
-        //}
+        }       
 
         private void OnCreateContact(object sender, RoutedEventArgs e)
         {
@@ -410,28 +368,11 @@ namespace GstarManager.Views.So
                 return;
             var cuItem = pageSize.SelectedItem as ComboBoxItem;
             _pageSize = cuItem.Content.ObjToInt();
-            setDataGridData(curSearchType);
-
-            //var cuItem = pageSize.SelectedItem as ComboBoxItem;
-            //_pageSize = cuItem.Content.ObjToInt();
             
-            //switch (curListFlag)
-            //{
-            //    case 0:
-            //        setDataGridDataAsc();                   
-            //        break;
-            //    case 1:
-            //        mhSearch();
-            //        break;
-            //    case 2:
-            //        exactSearch();
-            //        break;
-            //    default:
-            //        setPaginationControl();
-            //        break;
-
-            //}
+            setDataGridData(curSearchType);
         }
+
+           
 
         private void ClearAllRequires_Click(object sender, RoutedEventArgs e)
         {
