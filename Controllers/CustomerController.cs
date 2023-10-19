@@ -9,7 +9,7 @@ using SqlSugar;
 
 namespace GstarManager.Controllers
 {
-    public class CustomerController : Repository<Customer>
+    public class CustomerController : Repository<Customer>,IBaseController<Customer>
     {
                 
        

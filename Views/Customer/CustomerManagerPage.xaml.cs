@@ -196,16 +196,28 @@ namespace GstarManager.Views.So
         }
         private void CustomerList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var grid = sender as DataGrid;
-            var item = grid.SelectedItem as Models.Customer;
-            ContactList.ItemsSource = null;
-            if (item==null)
+            //var grid = sender as DataGrid;
+            //var item = grid.SelectedItem as Models.Customer;
+            //ContactList.ItemsSource = null;
+            //if (item==null)
+            //    return;
+            //if (item.Contacts.Count != 0)
+            //{
+
+            //    ContactList.ItemsSource = item.Contacts;
+            //}
+            getContacts();
+            
+        }
+        private void getContacts()
+        {
+            var item=CustomerList.SelectedItem as Models.Customer;
+            var c = new ContactController();
+            var list=c.GetContactsByCustomerIdAsc(item.Id);
+            if (item == null)
                 return;
-            if (item.Contacts.Count != 0)
-            {
-                
-                ContactList.ItemsSource = item.Contacts;
-            }
+            ContactList.ItemsSource = null;
+            ContactList.ItemsSource = list;
             
         }
 
@@ -325,7 +337,19 @@ namespace GstarManager.Views.So
 
         private void OnCreateContact(object sender, RoutedEventArgs e)
         {
+            if (CustomerList.SelectedItem == null)
+            {
+                MessageBox.Show("请选择需要新增联系人的客户");
+                return;
+            }
+            var form = new ContactForm();
+            if (form.ShowDialog() == true)
+            {
+                var contact = form.getData();
+                var control = new ContactController();
+                control.Insert(contact);
 
+            }
         }
 
         private void OnRetrieveContact(object sender, RoutedEventArgs e)

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GstarManager.Controllers
 {
-    public class ContactController : Repository<Contact>
+    public class ContactController :Repository<Contact>, IBaseController<Contact>
     {
 
         public int GetCount()
@@ -42,6 +42,10 @@ namespace GstarManager.Controllers
         public List<Contact> SearchByField(string fieldname, string search, int pagenumber, int pagesize, ref int totalcount)
         {
             throw new NotImplementedException();
+        }
+        public List<Contact> GetContactsByCustomerIdAsc(int customerid)
+        {
+            return SqlClient.Db.Queryable<Contact>().Where(it => it.CustomerId == customerid).ToList();
         }
     }
 }
