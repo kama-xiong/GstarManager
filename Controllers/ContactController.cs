@@ -23,29 +23,42 @@ namespace GstarManager.Controllers
             throw new NotImplementedException();
         }
 
-        public List<Contact> GetPageListAsc(int pagenumber, int pagesize, ref int totalcount)
+        public List<Contact> GetPageList(int pagenumber, int pagesize, ref int totalcount, string sort) 
         {
+            if (sort.ToLower() == "desc")
+            {
+                return SqlClient.Db.Queryable<Contact>().OrderBy(it=>it.C_Id,OrderByType.Desc).ToPageList(pagenumber, pagesize, ref totalcount);
+            }
+            else
+            {
+                return SqlClient.Db.Queryable<Contact>().OrderBy(it => it.C_Id, OrderByType.Asc).ToPageList(pagenumber, pagesize, ref totalcount);
+            }
             
-            return SqlClient.Db.Queryable<Contact>().ToPageList(pagenumber, pagesize, ref totalcount);
+            
         }
 
-        public List<Contact> GetPageListDesc(int pagenumber, int pagesize, ref int totalcount)
-        {
-            return SqlClient.Db.Queryable<Contact>().OrderByDescending(it=>it.C_Id).ToPageList(pagenumber, pagesize, ref totalcount);
-        }
+       
 
-        public List<Contact> Search(string search, int pagenumber, int pagesize, ref int totalcount)
+        public List<Contact> Search(string search, int pagenumber, int pagesize, ref int totalcount, string sort)
         {
             throw new NotImplementedException();
         }
 
-        public List<Contact> SearchByField(string fieldname, string search, int pagenumber, int pagesize, ref int totalcount)
+        public List<Contact> SearchByField(string fieldname, string search, int pagenumber, int pagesize, ref int totalcount,string sort)
         {
             throw new NotImplementedException();
         }
-        public List<Contact> GetContactsByCustomerIdAsc(int customerid)
+        public List<Contact> GetContactsByCustomerId(int customerid,string sort)
         {
-            return SqlClient.Db.Queryable<Contact>().Where(it => it.CustomerId == customerid).ToList();
+            if (sort.ToLower() == "desc")
+            {
+                return SqlClient.Db.Queryable<Contact>().OrderBy(it=>it.C_Id,OrderByType.Desc).Where(it => it.CustomerId == customerid).ToList();
+            }
+            else
+            {
+                return SqlClient.Db.Queryable<Contact>().OrderBy(it => it.C_Id, OrderByType.Asc).Where(it => it.CustomerId == customerid).ToList();
+            }
+                
         }
     }
 }

@@ -93,16 +93,7 @@ namespace GstarManager.Views.So
        
         /// <summary>
         /// 按增序设置当前客户清单数据 CustomerList
-        /// </summary>
-        //private void setDataGridDataAsc()
-        //{            
-        //    var list = _control.GetPageListAsc(_pageNumber,_pageSize,ref _totalCount);
-        //    rTotal.Text=_totalCount.ToString();
-        //    rCurrent.Text = _pageNumber.ToString();
-        //    setItemSource(list);
-        //    curListFlag = 0;
-            
-        //}
+        /// </summary>        
         private void setDataGridData(int searchType)
         {
             var c = new CustomerController();
@@ -110,22 +101,24 @@ namespace GstarManager.Views.So
             switch (searchType)
             {
                 case 0:
-                    list = c.GetPageListAsc(_pageNumber, _pageSize, ref _totalCount);
+                    list = c.GetPageList(_pageNumber, _pageSize, ref _totalCount,"desc");
                     break;
                 case 1:
                     var mhlook = TextBox_mhlookFor.Text.Trim();
-                    list = c.Search(mhlook, _pageNumber, _pageSize, ref _totalCount);
+                    list = c.Search(mhlook, _pageNumber, _pageSize, ref _totalCount, "desc");
 
                     break;
                 case 2:
                     var lookfor = TextBox_lookFor.Text.Trim();
                     var currentitem = Combo_lookFor.SelectedItem as ComboBoxItem;
                     var fieldName = currentitem.Tag.ToString();
-                    list = c.SearchByField(fieldName, lookfor, _pageNumber, _pageSize, ref _totalCount);
+                    list = c.SearchByField(fieldName, lookfor, _pageNumber, _pageSize, ref _totalCount,"desc");
                     break;
             }
             setItemSource(list);
             setPaginationControl();
+            CustomerList.SelectedIndex = 0;
+            CustomerList.Focus();
 
         }
         /// <summary>
@@ -195,25 +188,19 @@ namespace GstarManager.Views.So
          
         }
         private void CustomerList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //var grid = sender as DataGrid;
-            //var item = grid.SelectedItem as Models.Customer;
-            //ContactList.ItemsSource = null;
-            //if (item==null)
-            //    return;
-            //if (item.Contacts.Count != 0)
-            //{
-
-            //    ContactList.ItemsSource = item.Contacts;
-            //}
-            getContacts();
+        {            
+            if(CustomerList.SelectedItem != null)
+            {
+                getContacts();
+            }
+           
             
         }
         private void getContacts()
         {
             var item=CustomerList.SelectedItem as Models.Customer;
             var c = new ContactController();
-            var list=c.GetContactsByCustomerIdAsc(item.Id);
+            var list=c.GetContactsByCustomerId(item.Id,"asc");
             if (item == null)
                 return;
             ContactList.ItemsSource = null;
@@ -228,7 +215,7 @@ namespace GstarManager.Views.So
             {
                 var form = new CustomerForm();
                 form.SetData(data);
-                form.setMode(1);
+                form.setMode(2);
                 if (form.ShowDialog() == true)
                 {
                     var customer=form.GetData();
@@ -250,15 +237,25 @@ namespace GstarManager.Views.So
             var data = CustomerList.SelectedItem as Models.Customer;
             if (data != null)
             {
-                if(MessageBox.Show("即将删除数据，数据删除后将不可恢复！", "删除警告", MessageBoxButton.OKCancel) == MessageBoxResult.OK){
+                if(MessageBox.Show("即将删除客户及其联系人数据，数据删除后将不可恢复！", "删除警告", MessageBoxButton.OKCancel) == MessageBoxResult.OK){
                     var c=new CustomerController();
-                    if (c.Delete(data) == false){
+                    if (c.DeleteCustomerWithContacts(data) == false){
                         MessageBox.Show("删除数据错误，请联系管理员");
                         return;
                     }
                     setDataGridData(curSearchType);
+                    if (CustomerList.Items.Count != 0)
+                    {
+                        CustomerList.SelectedIndex=0;
+                        CustomerList.Focus();
+                        getContacts();
+                    }
+                    else
+                    {
+                        ContactList.ItemsSource = null;
+                    }
                     
-
+                    
                 }
                
             }
@@ -319,8 +316,10 @@ namespace GstarManager.Views.So
         {
             if(e.Key== Key.Enter)
             {
+                TextBox_mhlookFor.Clear();
                 curSearchType = 2;
                 setDataGridData(curSearchType);
+               
             }
         }
 
@@ -328,8 +327,10 @@ namespace GstarManager.Views.So
         {
             if(e.Key== Key.Enter)
             {
+                TextBox_lookFor.Clear();
                 curSearchType = 1;
                 setDataGridData(curSearchType);
+               
 
             }
             
@@ -342,29 +343,84 @@ namespace GstarManager.Views.So
                 MessageBox.Show("请选择需要新增联系人的客户");
                 return;
             }
+            var data = CustomerList.SelectedItem as Models.Customer;
             var form = new ContactForm();
+            form.setMode(1);
             if (form.ShowDialog() == true)
             {
                 var contact = form.getData();
+                contact.CustomerId = data.Id;
                 var control = new ContactController();
                 control.Insert(contact);
-
+                getContacts();
             }
         }
 
         private void OnRetrieveContact(object sender, RoutedEventArgs e)
         {
-
+            if (CustomerList.SelectedItem == null)
+            {
+                MessageBox.Show("请选择需要查看联系人的客户");
+                return;
+            }
+            if (ContactList.SelectedItem == null)
+            {
+                if(ContactList.Items.Count != 0)
+                {
+                    MessageBox.Show("请选择联系人");
+                }                
+                return;
+            }
+            var data = ContactList.SelectedItem as Models.Contact;
+            var form = new ContactForm();
+            var control=new ContactController();
+            var contact = control.GetById(data.C_Id);
+            form.setData(contact);
+            form.setMode(0);
+            form.ShowDialog();
         }
 
         private void OnUpdateContact(object sender, RoutedEventArgs e)
         {
+            if (CustomerList.SelectedItem == null)
+            {
+                MessageBox.Show("请选择需要修改联系人的客户");
+                return;
+            }
+            if (ContactList.SelectedItem == null)
+            {
+                if (ContactList.Items.Count != 0)
+                {
+                    MessageBox.Show("请选择修改的联系人");
+                }
+                return;
+            }
+            var curContact = ContactList.SelectedItem as Models.Contact;
+            var form = new ContactForm();
+            form.setData(curContact);
+            form.setMode(2);
+            if (form.ShowDialog() == true)
+            {
+                var control = new ContactController();
+                var newcontact = form.getData();
+                newcontact.C_Id = curContact.C_Id;
+                newcontact.CustomerId = curContact.CustomerId;
+                control.Update(newcontact);
+                getContacts();
+            }
 
         }
 
         private void OnDeleteContact(object sender, RoutedEventArgs e)
         {
-
+            if (MessageBox.Show("请确定要删除单前联系人，删除后，数据不可恢复，请慎重！", "删除警告", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                var contact=ContactList.SelectedItem as Models.Contact;
+                var ctr = new ContactController();
+                ctr.Delete(contact);
+                getContacts();
+            }
+            var curContact = ContactList.SelectedItem as Models.Contact;
         }
 
         private void ContactList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -405,5 +461,6 @@ namespace GstarManager.Views.So
             curSearchType = 0;
             setDataGridData(curSearchType);
         }
+        
     }
 }

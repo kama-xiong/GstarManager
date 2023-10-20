@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using GstarManager.Controllers;
 using GstarManager.Models;
 
 namespace GstarManager.Views.Customer
@@ -23,7 +24,34 @@ namespace GstarManager.Views.Customer
         public CustomerForm()
         {
             InitializeComponent();
+            InitialCountry("zh");
+            
         }
+        private void InitialCountry(string lanaguage)
+        {
+            var r = new Repository<Country>();
+            var list = r.GetList(); 
+            foreach (var item in list)
+            {
+                var comboItem = new ComboBoxItem();
+                switch (lanaguage.ToLower())
+                {
+                    case "zh":
+                        comboItem.Content = item.CountryNameZh;
+                        break;
+                    case "en":
+                        comboItem.Content = item.CountryNameEn;
+                        break;
+                }                                     
+                comboItem.Tag = item.CountryCode;
+                Country.Items.Add(comboItem);
+            }
+            if(Country.Items.Count > 0)
+            {
+                Country.SelectedIndex = 0;
+            }
+        }
+            
         
         public Models.Customer GetData()
         {
@@ -121,6 +149,7 @@ namespace GstarManager.Views.Customer
 
                     break;
                 case 2:
+                    this.Title = "修改客户资料";
                     break;
 
             }

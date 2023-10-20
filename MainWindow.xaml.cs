@@ -37,6 +37,7 @@ namespace GstarManager
         private void InitialDataBase(object sender, RoutedEventArgs e)
         {
             SqlClient.Db.CodeFirst.InitTables(typeof(Customer),typeof(Contact),typeof(Dictionary));
+            SqlClient.Db.CodeFirst.InitTables(typeof(Country));
         }
 
         private void SalesOrderManager(object sender, RoutedEventArgs e)

@@ -9,7 +9,7 @@
       Title="CustomerManagerPage" FontSize="14">
 
     <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" >
+        <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" >          
         <DockPanel>
             <ToolBar DockPanel.Dock="Top" Height="32">
                 <Button Name="Add" Click="add" >
@@ -46,9 +46,9 @@
                 <Separator/>
                 <Label Content="每页显示" HorizontalAlignment="Right"/>
                 <ComboBox Name="pageSize" Width="50"  SelectedIndex="0" IsEditable="False" SelectionChanged="pageSize_SelectionChanged">
-                    <ComboBoxItem Content="20" />
-                    <ComboBoxItem Content="40"/>
-                    <ComboBoxItem Content="60"/>
+                    <ComboBoxItem Content="15" />
+                    <ComboBoxItem Content="30"/>
+                    <ComboBoxItem Content="45"/>
                 </ComboBox>
 
             </ToolBar>
@@ -119,10 +119,10 @@
             </Grid>
             <Grid DockPanel.Dock="Bottom">
                 <DockPanel>
-                        <ScrollViewer Height="505" DockPanel.Dock="Top">
+                        <ScrollViewer Height="390" DockPanel.Dock="Top" >
                             <DataGrid DockPanel.Dock="Top" Name="CustomerList" AutoGenerateColumns="False" SelectionMode="Single" 
                               MouseDoubleClick="CustomerList_MouseDoubleClick" SelectionChanged="CustomerList_SelectionChanged"
-                              IsReadOnly="True" Height="Auto" MinHeight="350" >
+                              IsReadOnly="True" Height="Auto" MinHeight="250" >
                                 <DataGrid.Columns >
                                     <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="80" Visibility="Hidden"/>
                                     <DataGridTextColumn Header="类别" Binding="{Binding Type}" Width="100"/>
@@ -204,8 +204,9 @@
 
             
            
-        </DockPanel>
+        </DockPanel>          
         </ScrollViewer>
+    
 
     </Grid>
 </Page>

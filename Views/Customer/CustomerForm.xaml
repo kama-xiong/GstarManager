@@ -43,8 +43,8 @@
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Height="35">
                                 <Label Content="国家:" Width="100" HorizontalContentAlignment="Right" Height="30"/>
-                                <ComboBox Name="Country" Width="60" Height="30" SelectedIndex="0" VerticalContentAlignment="Center">
-                                    <ComboBoxItem Content="中国"/>
+                                <ComboBox Name="Country" Width="100" Height="30" VerticalContentAlignment="Center">
+                                    
                                 </ComboBox>
                                 <Label Content="省:" Width="40" HorizontalContentAlignment="Right" Height="30"/>
                                 <TextBox Name="Province" Width="80" Height="30" VerticalContentAlignment="Center"/>

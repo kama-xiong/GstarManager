@@ -1,4 +1,5 @@
 ﻿using GstarManager.Models;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,8 +25,9 @@ namespace GstarManager.Views.Customer
         public ContactForm()
         {
             InitializeComponent();
+            
         }
-        private Models.Contact getData()
+        public Models.Contact getData()
         {
             var c=new Models.Contact();
             c.C_Name = ContactName.Text.Trim();
@@ -34,8 +36,10 @@ namespace GstarManager.Views.Customer
             c.C_Tel=ContactTel.Text.Trim();
             c.C_Email=ContactEmail.Text.Trim();
             c.C_Ime=ContactIme.Text.Trim();
-            c.C_Hobby = getRichTextContent(ContactHobby);
-            c.C_Remark = getRichTextContent(ContactRemark);
+            c.C_Hobby=ContactHobby.Text.Trim();
+            c.C_Remark=ContactRemark.Text.Trim();
+            //c.C_Hobby = getRichTextContent(ContactHobby);
+            //c.C_Remark = getRichTextContent(ContactRemark);
             c.C_Photo = curPhotoUrl;
             return c;
         }
@@ -64,46 +68,101 @@ namespace GstarManager.Views.Customer
         {
 
         }
-        private void setData(Contact contact)
+        public void setData(Contact contact)
         {
+            
             ContactName.Text = contact.C_Name;
             ContactSex.Text = contact.C_Sex;
             BirthDay.Text = contact.C_Birthday.ToString();
             ContactTel.Text = contact.C_Tel;
             ContactEmail.Text = contact.C_Email;
             ContactIme.Text = contact.C_Ime;
-            setRichTextContent(ContactHobby, contact.C_Hobby);
-            setRichTextContent(ContactRemark, contact.C_Remark);
+            ContactHobby.Text= contact.C_Hobby;
+            ContactRemark.Text = contact.C_Remark;
+            //setRichTextContent(ContactHobby, contact.C_Hobby);
+            //setRichTextContent(ContactRemark, contact.C_Remark);
             loadPhoto(contact.C_Photo);
 
         }
-        private void setMode(int mode)
+        /// <summary>
+        /// 0:retrieve 1:create 2 update
+        /// </summary>
+        /// <param name="mode"></param>
+        public void setMode(int mode)
         {
             switch (mode)
             {
                 case 0:
+                    Confirm.Visibility = Visibility.Hidden;
+                    this.Title = "联系人资料";
+                    ContactHobby.IsReadOnly = true;
+                    ContactRemark.IsReadOnly = true;
+                    ContactName.IsReadOnly = true;
+                    ContactEmail.IsReadOnly = true;
+                    ContactSex.IsReadOnly = true;
+                    ContactTel.IsReadOnly = true;
+                    ContactImage.IsEnabled = false;
+                    ContactIme.IsReadOnly = true;
+                    LoadImage.IsEnabled = false;
+                    BirthDay.IsEnabled = false;
                     break;
                 case 1:
+                    this.Title = "新增联系人";
+                    BirthDay.SelectedDate = DateTime.Now;
                     break;
                 case 2:
+                    this.Title = "修改联系人";
                     break;
 
             }
 
         }
-        private void checkData()
+       
+    private bool checkData()
         {
+            bool hasNoError = true; ;
+            if (BirthDay.SelectedDate== null)
+            {
+                BirthDay.Background = Brushes.Pink;
+                hasNoError = false;
+            }
+            if (ContactName.Text == null)
+            {
+                ContactName.Background = Brushes.Pink;
+                hasNoError = false;
+            }
+            else
+            {
+                if(ContactName.Text.Length == 0)
+                {
+                    ContactName.Background = Brushes.Pink;
+                    hasNoError = false;
+                }
+            }
+            return hasNoError;
 
         }
 
         private void LoadImage_Click(object sender, RoutedEventArgs e)
         {
-
+            var openfiledialog = new OpenFileDialog();
+            openfiledialog.Filter = "图片|*.jpg;*.jpeg;*.gif;*.bmp";
+            if (openfiledialog.ShowDialog() == true)
+            {
+                string name=openfiledialog.FileName;
+                var bitmap = new BitmapImage(new Uri(name));
+                ContactImage.Source= bitmap;
+                Console.WriteLine(name);
+            }
         }
 
         private void Confirm_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = true;
+            if (checkData() == true)
+            {
+                DialogResult = true;
+            }
+            
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

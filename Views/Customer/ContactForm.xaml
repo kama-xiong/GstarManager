@@ -10,13 +10,13 @@
         <StackPanel Orientation="Vertical" Margin="15,15,50,20">
             <StackPanel Orientation="Horizontal">
                 <StackPanel Orientation="Vertical" >
-                    <StackPanel Orientation="Horizontal" Margin="20,20,2,2">
-                        <Label Content="姓名:"  VerticalContentAlignment="Center" Margin="2" Height="35"></Label>
+                    <StackPanel Orientation="Horizontal" Margin="20,10,2,2">
+                        <Label Content="姓名:"  VerticalContentAlignment="Center" Margin="2" Height="30"></Label>
                         <TextBox x:Name="ContactName" Grid.Column="2" VerticalContentAlignment="Center" Margin="2" Width="100"></TextBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="20,2,2,2">
-                        <Label Content="性别:"  VerticalContentAlignment="Center" Margin="2" Height="35"></Label>
-                        <ComboBox x:Name="ContactSex" Grid.Column="2" VerticalContentAlignment="Center" Margin="2" Width="60" SelectedIndex="1" Height="35">
+                        <Label Content="性别:"  VerticalContentAlignment="Center" Margin="2" Height="30"></Label>
+                        <ComboBox x:Name="ContactSex" Grid.Column="2" VerticalContentAlignment="Center" Margin="2" Width="60" SelectedIndex="1" Height="30">
                             <ComboBoxItem Content="男"></ComboBoxItem>
                             <ComboBoxItem Content="女"></ComboBoxItem>
                         </ComboBox>
@@ -24,35 +24,44 @@
                         <DatePicker Name="BirthDay" Width="150" VerticalAlignment="Center" SelectedDateFormat="Short"></DatePicker>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="20,2,2,2">
-                        <Label Content="电话:"  VerticalContentAlignment="Center" Margin="2" Height="35"></Label>
-                        <TextBox x:Name="ContactTel" Grid.Column="2" VerticalContentAlignment="Center" Margin="2" Width="150" ></TextBox>
-                        <Label Content="邮箱:"  VerticalContentAlignment="Center" Margin="20,0,0,0"></Label>
-                        <TextBox Name="ContactEmail" Width="150"></TextBox>
+                        <Label Content="电话:"  VerticalContentAlignment="Center" Margin="2" Height="30"></Label>
+                        <TextBox x:Name="ContactTel" Grid.Column="2" VerticalContentAlignment="Center" Margin="2" Width="250" ></TextBox>                        
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="20,2,2,2">                       
+                        <Label Content="邮箱:"  VerticalContentAlignment="Center" Margin="2" Height="30"></Label>
+                        <TextBox Name="ContactEmail" Width="250" VerticalContentAlignment="Center"></TextBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="20,2,2,2">
-                        <Label Content="即时通讯:"  VerticalContentAlignment="Center" Margin="2" Height="35"></Label>
+                        <Label Content="即时通讯:"  VerticalContentAlignment="Center" Margin="2" Height="30"></Label>
                         <TextBox x:Name="ContactIme" Grid.Column="2" VerticalContentAlignment="Center" Margin="2" Width="335" ></TextBox>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
-                    <GroupBox BorderThickness="1" BorderBrush="Beige" Margin="10,0,0,0">
+                    
                         <StackPanel Orientation="Vertical">
+                        <Border BorderBrush="Black" BorderThickness="1">
                             <Image x:Name="ContactImage" Width="140" Height="180" ></Image>
-                            <Button x:Name="LoadImage" Content="载入..." Margin="0,2,0,0" Width="60" Click="LoadImage_Click"></Button>
+                        </Border>
+                        <Button x:Name="LoadImage" Content="载入..." Margin="0,2,0,0" Width="60" Click="LoadImage_Click"></Button>
                         </StackPanel>
-                    </GroupBox>
+                    
                     
                 </StackPanel>
             </StackPanel>
             
             <StackPanel>
                 <GroupBox Header="兴趣爱好" HorizontalAlignment="Left" Margin="20,0,0,0">
-                    <RichTextBox x:Name="ContactHobby" Height="150" Width="575" ScrollViewer.CanContentScroll="True"></RichTextBox>
+                    <StackPanel>
+                        <TextBox x:Name="ContactHobby" Height="150" Width="570" ScrollViewer.VerticalScrollBarVisibility="Visible" AcceptsReturn="True" TextWrapping="Wrap" Margin="2"></TextBox>
+                    </StackPanel>
+                        
+                                      
                 </GroupBox>
             </StackPanel>
             <StackPanel>
-                <GroupBox Header="备注" HorizontalAlignment="Left" Margin="20,0,0,0">
-                    <RichTextBox x:Name="ContactRemark" Height="150" Width="575" ScrollViewer.CanContentScroll="True"></RichTextBox>
+                <GroupBox Header="备注" HorizontalAlignment="Left" Margin="20,0,0,0">                   
+                        <TextBox x:Name="ContactRemark" Height="150" Width="570" VerticalScrollBarVisibility="Visible" AcceptsReturn="True" TextWrapping="Wrap" Margin="2"></TextBox>                  
+                    
                 </GroupBox>
             </StackPanel>
             <StackPanel Margin="0,25,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
