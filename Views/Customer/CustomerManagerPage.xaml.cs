@@ -46,7 +46,7 @@ namespace GstarManager.Views.So
         public CustomerManagerPage(TabControl parenttab)
         {
             
-        _control = new CustomerController();
+            _control = new CustomerController();
             _parenttab = parenttab;            
             InitializeComponent();
             setComboLookFor();
@@ -54,6 +54,7 @@ namespace GstarManager.Views.So
             //setDataGridDataAsc();
             //setPaginationControl();
             setDataGridData(curSearchType);            
+            //Task.Run(async()=>await setDataGridDataAsync(curSearchType));            
             CustomerList.LoadingRow += (se, e) => e.Row.Header = e.Row.GetIndex() + 1 + (_pageNumber - 1) * _pageSize;
 
         }
@@ -115,6 +116,35 @@ namespace GstarManager.Views.So
                     list = c.SearchByField(fieldName, lookfor, _pageNumber, _pageSize, ref _totalCount,"desc");
                     break;
             }
+            setItemSource(list);
+            setPaginationControl();
+            CustomerList.SelectedIndex = 0;
+            CustomerList.Focus();
+
+        }
+        private async Task setDataGridDataAsync(int searchType)
+        {
+            var c = new CustomerController();
+            var list = new List<Models.Customer>();
+            switch (searchType)
+            {
+                case 0:
+                    list =await c.GetPageListAsync(_pageNumber, _pageSize,  "desc");
+                    
+                    break;
+                case 1:
+                    var mhlook = TextBox_mhlookFor.Text.Trim();
+                    list = c.Search(mhlook, _pageNumber, _pageSize, ref _totalCount, "desc");
+
+                    break;
+                case 2:
+                    var lookfor = TextBox_lookFor.Text.Trim();
+                    var currentitem = Combo_lookFor.SelectedItem as ComboBoxItem;
+                    var fieldName = currentitem.Tag.ToString();
+                    list = c.SearchByField(fieldName, lookfor, _pageNumber, _pageSize, ref _totalCount, "desc");
+                    break;
+            }
+            _totalCount = await c.GetCountAsync();
             setItemSource(list);
             setPaginationControl();
             CustomerList.SelectedIndex = 0;

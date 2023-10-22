@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Runtime.InteropServices;
+using GstarManager.PublicFuncs;
 
 namespace GstarManager
 {
@@ -13,7 +14,7 @@ namespace GstarManager
     {
         public static SqlSugarClient Db = new SqlSugarClient(new ConnectionConfig()
         {
-            ConnectionString = GetConn(),
+            ConnectionString = GetConn("E:\\Aiigistar\\Config.ini"),
             DbType = DbType.MySql,
             IsAutoCloseConnection = true
         },
@@ -37,46 +38,16 @@ namespace GstarManager
                //注意多租户 有几个设置几个
                //db.GetConnection(i).Aop
 
-           });
-        [DllImport("kernel32")]// 读配置文件方法的6个参数：所在的分区（section）、 键值、     初始缺省值、   StringBuilder、  参数长度上限 、配置文件路径
-        public static extern long GetPrivateProfileString(string section, string key, string defaultValue, StringBuilder retVal, int size, string filePath);
-        [DllImport("kernel32")]//写入配置文件方法的4个参数：  所在的分区（section）、  键值、     参数值、       配置文件路径
-        private static extern long WritePrivateProfileString(string section, string key, string value, string filePath);
-        /*读配置文件*/
-        public static string GetValue(string section, string key)
+           });        
+        public static string GetConn(string strPath)
         {
-            // ▼ 获取当前程序启动目录
-            string strPath = "E:\\Aiigistar\\config.ini";
-            //string strPath = AppDomain.CurrentDomain.BaseDirectory + @"/config.ini"; //这里是绝对路径
-            //string strPath = "./config.ini";  //这里是相对路径
-            if (File.Exists(strPath))  //检查是否有配置文件，并且配置文件内是否有相关数据。
-            {
-                StringBuilder sb = new StringBuilder(255);
-                GetPrivateProfileString(section, key, "配置文件不存在，读取未成功!", sb, 255, strPath);
-                return sb.ToString();
-            }
-            else
-            {
-                return string.Empty;
-            }
-        }
-        /*写配置文件*/
-        public static void SetValue(string section, string key, string value)
-        {
-            // ▼ 获取当前程序启动目录
-            // string strPath = Application.StartupPath + @"/config.ini";  这里是绝对路径
-            string strPath = "E:\\Aiigistar";
-            //string strPath = "./config.ini";      //这里是相对路径，
-            WritePrivateProfileString(section, key, value, strPath);
-        }
-        public static string GetConn()
-        {
-            var server = GetValue("DataBaseSettings", "server");
-            var database = GetValue("DataBaseSettings", "database");
-            var port = GetValue("DataBaseSettings", "port");
-            var uid = GetValue("DataBaseSettings", "uid");
-            var pwd = GetValue("DataBaseSettings", "pwd");
-            var conn = string.Format("server={0};database={1};uid={2};pwd={3};Port={4}", server, database, uid, pwd,port);
+            
+            var server =Filefuncs.GetIniFileValue(strPath,"DataBaseSettings", "server");
+            var database = Filefuncs.GetIniFileValue(strPath,"DataBaseSettings", "database");
+            var port = Filefuncs.GetIniFileValue(strPath,"DataBaseSettings", "port");
+            var uid = Filefuncs.GetIniFileValue(strPath,"DataBaseSettings", "uid");
+            var pwd = Filefuncs.GetIniFileValue(strPath,"DataBaseSettings", "pwd");
+            var conn = string.Format("server={0};database={1};uid={2};pwd={3};Port={4}", server, database, uid, pwd,port);            
             return conn;
         }
 

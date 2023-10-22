@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Animation;
 using GstarManager.Models;
 using SqlSugar;
 
@@ -17,7 +18,12 @@ namespace GstarManager.Controllers
         {
             return SqlClient.Db.Queryable<Models.Customer>().Count();
         }
+        public async Task<int> GetCountAsync()
+        {
+            return await SqlClient.Db.Queryable<Customer>().CountAsync();
+        }
 
+        
         public bool DeleteCustomerWithContacts(Customer customer)
         {
             try
@@ -50,9 +56,24 @@ namespace GstarManager.Controllers
             else
             {
                 return SqlClient.Db.Queryable<Customer>().Includes(x => x.Contacts).OrderBy(it => it.Id, OrderByType.Asc).ToPageList(pagenumber, pagesize, ref totalcount);
+            }        
+            
+        }
+        public async Task<List<Customer>> GetPageListAsync(int pagenumber,int pagesize,string sort)
+        {
+            var list=new List<Customer>();
+            if (sort.ToLower() == "desc")
+            {
+                list= await SqlClient.Db.Queryable<Customer>().Includes(x => x.Contacts).OrderBy(it => it.Id, OrderByType.Desc).ToPageListAsync(pagenumber, pagesize);
+                
             }
-            
-            
+            else
+            {
+                list= await SqlClient.Db.Queryable<Customer>().Includes(x => x.Contacts).OrderBy(it => it.Id, OrderByType.Asc).ToPageListAsync(pagenumber, pagesize);
+                
+
+            }
+            return list;
         }
        
 
