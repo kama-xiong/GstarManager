@@ -40,7 +40,7 @@
                     
                         <StackPanel Orientation="Vertical">
                         <Border BorderBrush="Black" BorderThickness="1">
-                            <Image x:Name="ContactImage" Width="140" Height="180" ></Image>
+                            <Image x:Name="ContactImage" Width="140" Height="180" MouseDown="ContactImage_MouseDown" ></Image>
                         </Border>
                         <Button x:Name="LoadImage" Content="载入..." Margin="0,2,0,0" Width="60" Click="LoadImage_Click"></Button>
                         </StackPanel>

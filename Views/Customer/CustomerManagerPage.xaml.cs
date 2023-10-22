@@ -1,5 +1,6 @@
 ﻿using GstarManager.Controllers;
 using GstarManager.Models;
+using GstarManager.PublicFuncs;
 using GstarManager.Views.Customer;
 using SqlSugar.Extensions;
 using System;
@@ -286,9 +287,11 @@ namespace GstarManager.Views.So
                     }
                     
                     
-                }
+                }                
                
             }
+            CustomerList.SelectedIndex = 0;
+            CustomerList.Focus();
 
         }
 
@@ -378,10 +381,23 @@ namespace GstarManager.Views.So
             form.setMode(1);
             if (form.ShowDialog() == true)
             {
-                var contact = form.getData();
+                var contact = form.getData();                
                 contact.CustomerId = data.Id;
                 var control = new ContactController();
-                control.Insert(contact);
+                try
+                {
+                    //var fname = System.IO.Path.GetFileName(contact.C_Photo);
+                    var extension = System.IO.Path.GetExtension(contact.C_Photo);
+                    var filepathname = contact.C_Photo;
+                    contact.C_Photo =string.Format("{0}_{1}{2}",contact.C_Name,DateTime.Now.ToString("yyyy-MM-dd-mm-ss-hh"),extension);
+                    control.Insert(contact);
+                    var objectname = string.Format("manager/object/contact/{0}", contact.C_Photo);                    
+                    Filefuncs.SaveFileToOss(filepathname, objectname);                                      
+
+                }catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }                
                 getContacts();
             }
         }
@@ -450,7 +466,7 @@ namespace GstarManager.Views.So
                 ctr.Delete(contact);
                 getContacts();
             }
-            var curContact = ContactList.SelectedItem as Models.Contact;
+            
         }
 
         private void ContactList_MouseDoubleClick(object sender, MouseButtonEventArgs e)

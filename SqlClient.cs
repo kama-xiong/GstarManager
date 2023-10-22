@@ -47,9 +47,11 @@ namespace GstarManager
             var port = Filefuncs.GetIniFileValue(strPath,"DataBaseSettings", "port");
             var uid = Filefuncs.GetIniFileValue(strPath,"DataBaseSettings", "uid");
             var pwd = Filefuncs.GetIniFileValue(strPath,"DataBaseSettings", "pwd");
-            var conn = string.Format("server={0};database={1};uid={2};pwd={3};Port={4}", server, database, uid, pwd,port);            
+            var conn = string.Format("server={0};database={1};uid={2};pwd={3};Port={4}", server, database, uid, pwd,port);   
+            Console.WriteLine("读取数据库设置数据-------------------------");
             return conn;
         }
+
 
     }
 }

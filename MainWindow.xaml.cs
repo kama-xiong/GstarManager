@@ -70,8 +70,18 @@ namespace GstarManager
 
         }
 
-       
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
 
-       
+        }
+
+        private void OSS_Save_Testing(object sender, RoutedEventArgs e)
+        {
+            var setfile = "E:\\Aiigistar\\config.ini";
+            string localfile = "E:\\Aiigistar\\test.txt";
+            string objectname = @"manager/object/test.txt";
+            var result=PublicFuncs.Filefuncs.SaveFileToOss(localfile, objectname);
+            MessageBox.Show(result.ToString());
+        }
     }
 }

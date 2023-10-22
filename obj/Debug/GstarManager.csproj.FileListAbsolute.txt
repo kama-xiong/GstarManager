@@ -118,3 +118,6 @@ E:\Aiigistar\GstarManager\obj\Debug\GstarManager.exe
 E:\Aiigistar\GstarManager\obj\Debug\GstarManager.pdb
 E:\Aiigistar\GstarManager\obj\Debug\Views\Customer\ContactForm.g.cs
 E:\Aiigistar\GstarManager\obj\Debug\Views\Customer\ContactForm.baml
+E:\Aiigistar\GstarManager\bin\Debug\Aliyun.OSS.dll
+E:\Aiigistar\GstarManager\bin\Debug\Aliyun.OSS.pdb
+E:\Aiigistar\GstarManager\bin\Debug\Aliyun.OSS.xml

@@ -37,6 +37,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aliyun.OSS, Version=2.13.0.0, Culture=neutral, PublicKeyToken=0ad4175f0dac0b9b, processorArchitecture=MSIL">
+      <HintPath>packages\Aliyun.OSS.SDK.2.13.0\lib\net45\Aliyun.OSS.dll</HintPath>
+    </Reference>
     <Reference Include="BouncyCastle.Crypto, Version=1.9.0.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
       <HintPath>packages\Portable.BouncyCastle.1.9.0\lib\net40\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
@@ -126,6 +129,7 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Dictionary.cs" />
     <Compile Include="Controllers\Repository.cs" />
+    <Compile Include="Models\OssSetting.cs" />
     <Compile Include="PublicFuncs\Filefuncs.cs" />
     <Compile Include="SqlClient.cs" />
     <Compile Include="Views\Customer\ContactForm.xaml.cs">

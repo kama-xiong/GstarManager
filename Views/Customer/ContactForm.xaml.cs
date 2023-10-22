@@ -1,7 +1,9 @@
 ﻿using GstarManager.Models;
+using GstarManager.PublicFuncs;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +24,8 @@ namespace GstarManager.Views.Customer
     public partial class ContactForm : Window
     {
         string curPhotoUrl = null;
+        public string _object_pre = @"manager/object/contact/";
+        public string _local_pre = @"\temp\contact\";
         public ContactForm()
         {
             InitializeComponent();
@@ -66,6 +70,16 @@ namespace GstarManager.Views.Customer
         }
         private void loadPhoto(string photo)
         {
+            var objectname = _object_pre + photo;            
+            var localpath = System.IO.Directory.GetCurrentDirectory() + _local_pre;
+            var locafilename = localpath + photo;
+            if (Directory.Exists(localpath)==false)
+            {
+                Directory.CreateDirectory(localpath);
+            }
+            Filefuncs.DownloadFileFromOss(locafilename, objectname);
+            var bitmap = new BitmapImage(new Uri(locafilename));
+            ContactImage.Source = bitmap;
 
         }
         public void setData(Contact contact)
@@ -81,7 +95,12 @@ namespace GstarManager.Views.Customer
             ContactRemark.Text = contact.C_Remark;
             //setRichTextContent(ContactHobby, contact.C_Hobby);
             //setRichTextContent(ContactRemark, contact.C_Remark);
-            loadPhoto(contact.C_Photo);
+            if (contact.C_Photo != null)
+            {
+                loadPhoto(contact.C_Photo);
+                curPhotoUrl = contact.C_Photo;
+            }
+            
 
         }
         /// <summary>
@@ -101,7 +120,7 @@ namespace GstarManager.Views.Customer
                     ContactEmail.IsReadOnly = true;
                     ContactSex.IsReadOnly = true;
                     ContactTel.IsReadOnly = true;
-                    ContactImage.IsEnabled = false;
+                    ContactImage.IsEnabled = true;
                     ContactIme.IsReadOnly = true;
                     LoadImage.IsEnabled = false;
                     BirthDay.IsEnabled = false;
@@ -149,10 +168,10 @@ namespace GstarManager.Views.Customer
             openfiledialog.Filter = "图片|*.jpg;*.jpeg;*.gif;*.bmp";
             if (openfiledialog.ShowDialog() == true)
             {
-                string name=openfiledialog.FileName;
-                var bitmap = new BitmapImage(new Uri(name));
+                curPhotoUrl=openfiledialog.FileName;
+                var bitmap = new BitmapImage(new Uri(curPhotoUrl));
                 ContactImage.Source= bitmap;
-                Console.WriteLine(name);
+                
             }
         }
 
@@ -168,6 +187,36 @@ namespace GstarManager.Views.Customer
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
+        }
+
+        private void ContactImage_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
+            {
+                e.Handled=true;
+                var localpath = System.IO.Directory.GetCurrentDirectory() + _local_pre;    
+                if (System.IO.Directory.Exists(localpath))
+                {
+                    System.Diagnostics.Process process = new System.Diagnostics.Process();
+                    process.StartInfo.FileName = localpath + curPhotoUrl;
+                    if (System.Environment.Is64BitOperatingSystem)
+                    {
+                        process.StartInfo.Arguments = "rundll32.exe C:\\Windows\\SysWOW64\\shimgvm.dll,ImageView_FullScreen";
+                    }
+                    else
+                    {
+                        process.StartInfo.Arguments = "rundll32.exe C:\\Windows\\System32\\shimgvm.dll,ImageView_FullScreen";
+                    }
+
+                    process.StartInfo.UseShellExecute = true;
+                    process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                    process.Start();
+                    process.Close();
+                }
+                
+            }
+        
+        
         }
     }
 }

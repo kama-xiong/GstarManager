@@ -1,4 +1,5 @@
 ﻿using GstarManager.Models;
+using GstarManager.PublicFuncs;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
@@ -59,6 +60,11 @@ namespace GstarManager.Controllers
                 return SqlClient.Db.Queryable<Contact>().OrderBy(it => it.C_Id, OrderByType.Asc).Where(it => it.CustomerId == customerid).ToList();
             }
                 
+        }
+        public bool SaveFileToOss(string filename,Contact contact)
+        {
+            return true;
+
         }
     }
 }
