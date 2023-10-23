@@ -21,6 +21,7 @@ namespace GstarManager.Views.Customer
     /// </summary>
     public partial class CustomerForm : Window
     {
+        //public int curCustomerId = 0;
         public CustomerForm()
         {
             InitializeComponent();
@@ -86,8 +87,9 @@ namespace GstarManager.Views.Customer
             c.Tax = Tax.Text.Trim();
             return c;
         }
-        public void SetData(Models.Customer c)
+        public void SetData(Models.Customer c)            
         {
+            //curCustomerId = c.Id;
             type.Text = c.Type;
             Code.Text = c.Code;
             CName.Text = c.Name;
@@ -140,8 +142,7 @@ namespace GstarManager.Views.Customer
             switch (mode)
             {
                 case 0:
-                    Confirm.Visibility = Visibility.Hidden;
-                    ContactToolbar.IsEnabled = false;
+                    Confirm.Visibility = Visibility.Hidden;                    
                     this.Title = "客户资料";
                     break;
                 case 1:
@@ -175,27 +176,22 @@ namespace GstarManager.Views.Customer
 
         private void dataGridContacts_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            var grid = sender as DataGrid;
+            var item = grid.SelectedItem as Models.Contact;
 
+            if (item != null)
+            {
+                var form = new ContactForm();
+                var ctr = new ContactController();
+                var contact = ctr.GetById(item.C_Id);
+                form.setData(contact);
+                form.setMode(0);
+                form.ShowDialog();
+                
+            }
         }
+       
 
-        private void OnCreate(object sender, RoutedEventArgs e)
-        {
 
-        }
-
-        private void OnDelete(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void OnRetrieve(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void OnUpdate(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

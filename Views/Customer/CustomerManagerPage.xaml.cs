@@ -39,8 +39,7 @@ namespace GstarManager.Views.So
         /// 0 表示显示普通清单
         /// 1 表示显示模湖查找清单
         /// 2 表示显示精确查找清单
-        /// </summary>
-        private int curListFlag=0;
+        /// </summary>        
         private int curSearchType = 0;     
         
         
@@ -122,36 +121,7 @@ namespace GstarManager.Views.So
             CustomerList.SelectedIndex = 0;
             CustomerList.Focus();
 
-        }
-        private async Task setDataGridDataAsync(int searchType)
-        {
-            var c = new CustomerController();
-            var list = new List<Models.Customer>();
-            switch (searchType)
-            {
-                case 0:
-                    list =await c.GetPageListAsync(_pageNumber, _pageSize,  "desc");
-                    
-                    break;
-                case 1:
-                    var mhlook = TextBox_mhlookFor.Text.Trim();
-                    list = c.Search(mhlook, _pageNumber, _pageSize, ref _totalCount, "desc");
-
-                    break;
-                case 2:
-                    var lookfor = TextBox_lookFor.Text.Trim();
-                    var currentitem = Combo_lookFor.SelectedItem as ComboBoxItem;
-                    var fieldName = currentitem.Tag.ToString();
-                    list = c.SearchByField(fieldName, lookfor, _pageNumber, _pageSize, ref _totalCount, "desc");
-                    break;
-            }
-            _totalCount = await c.GetCountAsync();
-            setItemSource(list);
-            setPaginationControl();
-            CustomerList.SelectedIndex = 0;
-            CustomerList.Focus();
-
-        }
+        }        
         /// <summary>
         /// 依据数据设置DataGrid数据
         /// </summary>
@@ -195,18 +165,7 @@ namespace GstarManager.Views.So
                 form.ShowDialog();
             }
         }
-        private void ShowDetail()
-        {
-            var data = CustomerList.SelectedItem as Models.Customer;
-            if (data != null)
-            {
-                var form = new CustomerForm();
-                form.SetData(data);
-                form.setMode(0);
-                form.ShowDialog();
-            }
-        }
-
+       
         private void CustomerList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var grid = sender as DataGrid;
@@ -391,9 +350,8 @@ namespace GstarManager.Views.So
                     var filepathname = contact.C_Photo;
                     contact.C_Photo = string.Format("{0}_{1}{2}", contact.C_Name, DateTime.Now.ToString("yyyy-MM-dd-mm-ss-hh"), extension);
                     control.Insert(contact);
-                    var objectname = string.Format("manager/object/contact/{0}", contact.C_Photo);
-                    Filefuncs.SaveFileToOss(filepathname, objectname);
-                    
+                    var objectname = string.Format("{0}{1}",ConstSetting.OssContactFilePre,contact.C_Photo);
+                    Filefuncs.SaveFileToOss(filepathname, objectname);                    
 
                 }catch(Exception ex)
                 {
@@ -451,8 +409,6 @@ namespace GstarManager.Views.So
             {
                 try
                 {
-
-
                     var control = new ContactController();
                     var newcontact = form.getData();
                     newcontact.C_Id = curContact.C_Id;
@@ -460,20 +416,31 @@ namespace GstarManager.Views.So
                     if (form.photoIsChanged == true)
                     {
                         //需加入删除原有OSS文件
-                        var oldObjectname = string.Format("manager/object/contact/{0}", curContact.C_Photo);
-                        Filefuncs.DeleteFileFromOss(oldObjectname);
+                        var oldObjectname = string.Format("{0}{1}",ConstSetting.OssContactFilePre, curContact.C_Photo);
+                        try
+                        {
+                            Filefuncs.DeleteFileFromOss(oldObjectname);
+                        }
+                        catch { }
+                        
                         //删除本地文件
-                        var localfilename = System.IO.Directory.GetCurrentDirectory() + @"/temp/contact/" + curContact.C_Photo;
+                        var localfilename = System.IO.Directory.GetCurrentDirectory() +ConstSetting.LocalContactFilePre + curContact.C_Photo;
 
                         var extension = System.IO.Path.GetExtension(newcontact.C_Photo);
                         var filepathname = newcontact.C_Photo;
                         newcontact.C_Photo = string.Format("{0}_{1}{2}", newcontact.C_Name, DateTime.Now.ToString("yyyy-MM-dd-mm-ss-hh"), extension);
-                        var objectname = string.Format("manager/object/contact/{0}", newcontact.C_Photo);
+                        var objectname = string.Format("{0}{1}",ConstSetting.OssContactFilePre, newcontact.C_Photo);
                         try
                         {
                             System.IO.File.Delete(localfilename);
-                            Filefuncs.SaveFileToOss(filepathname, objectname);
+                        }
+                        catch
+                        {
 
+                        }
+                        try
+                        {
+                            Filefuncs.SaveFileToOss(filepathname, objectname);
                         }
                         catch
                         {
@@ -499,7 +466,30 @@ namespace GstarManager.Views.So
             {
                 var contact=ContactList.SelectedItem as Models.Contact;
                 var ctr = new ContactController();
-                ctr.Delete(contact);
+                var localfilename = System.IO.Directory.GetCurrentDirectory() + ConstSetting.LocalContactFilePre + contact.C_Photo;
+                var objectname = ConstSetting.OssContactFilePre + contact.C_Photo;
+                try
+                {
+                    Filefuncs.DeleteFileFromOss(objectname);
+                }catch { }
+                try
+                {
+                    System.IO.File.Delete(localfilename);
+                    Console.WriteLine("Delete image success");
+                }
+                catch
+                {
+
+                }
+                try
+                {
+                    ctr.Delete(contact);
+                }
+                catch
+                {
+
+                }
+               
                 getContacts();
             }
             
@@ -543,6 +533,14 @@ namespace GstarManager.Views.So
             curSearchType = 0;
             setDataGridData(curSearchType);
         }
-        
+
+       
+        /// <summary>
+        /// 以文档形式显示客户联系资料明细
+        /// </summary>
+        private void ShowDetail()
+        {
+
+        }
     }
 }

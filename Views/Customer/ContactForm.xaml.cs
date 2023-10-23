@@ -24,9 +24,7 @@ namespace GstarManager.Views.Customer
     public partial class ContactForm : Window
     {
         private string curPhotoUrl = null;
-        public bool photoIsChanged = false;
-        public string _object_pre = @"manager/object/contact/";
-        public string _local_pre = @"\temp\contact\";
+        public bool photoIsChanged = false;        
         public ContactForm()
         {
             InitializeComponent();
@@ -48,40 +46,20 @@ namespace GstarManager.Views.Customer
             c.C_Photo = curPhotoUrl;
             return c;
         }
-        private string getRichTextContent(RichTextBox rtb)
-        {
-                TextRange textRange = new TextRange(
-            // TextPointer to the start of content in the RichTextBox.
-            rtb.Document.ContentStart,
-            // TextPointer to the end of content in the RichTextBox.
-            rtb.Document.ContentEnd
-        );
-
-            // The Text property on a TextRange object returns a string
-            // representing the plain text content of the TextRange.
-            return textRange.Text;
-        }
-        private void setRichTextContent(RichTextBox rtb, string str)
-        {
-            rtb.Document.Blocks.Clear();           
-            Run run = new Run(str);
-            Paragraph p = new Paragraph();                        
-            p.Inlines.Add(run);
-            rtb.Document.Blocks.Add(p);
-        }
         private void loadPhoto(string photo)
         {
-            var objectname = _object_pre + photo;            
-            var localpath = System.IO.Directory.GetCurrentDirectory() + _local_pre;
-            var locafilename = localpath + photo;
+            var objectname = ConstSetting.OssContactFilePre+ photo;            
+            var localpath = System.IO.Directory.GetCurrentDirectory() + ConstSetting.LocalContactFilePre;
+            var localfilename = localpath + photo;
             if (Directory.Exists(localpath)==false)
             {
                 Directory.CreateDirectory(localpath);
             }
             try
             {
-                Filefuncs.DownloadFileFromOss(locafilename, objectname);
-                var bitmap = new BitmapImage(new Uri(locafilename));
+                Filefuncs.DownloadFileFromOss(localfilename, objectname);
+                var bitmap = Filefuncs.GetImage(localfilename);
+               //var bitmap = new BitmapImage(new Uri(locafilename));
                 ContactImage.Source = bitmap;
             }
             catch
@@ -206,24 +184,29 @@ namespace GstarManager.Views.Customer
             if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
             {
                 e.Handled=true;
-                var localpath = System.IO.Directory.GetCurrentDirectory() + _local_pre;    
+                var localpath = System.IO.Directory.GetCurrentDirectory() + ConstSetting.LocalContactFilePre;    
                 if (System.IO.Directory.Exists(localpath))
                 {
-                    System.Diagnostics.Process process = new System.Diagnostics.Process();
-                    process.StartInfo.FileName = localpath + curPhotoUrl;
-                    if (System.Environment.Is64BitOperatingSystem)
+                    try
                     {
-                        process.StartInfo.Arguments = "rundll32.exe C:\\Windows\\SysWOW64\\shimgvm.dll,ImageView_FullScreen";
-                    }
-                    else
-                    {
-                        process.StartInfo.Arguments = "rundll32.exe C:\\Windows\\System32\\shimgvm.dll,ImageView_FullScreen";
-                    }
+                        System.Diagnostics.Process process = new System.Diagnostics.Process();
+                        process.StartInfo.FileName = localpath + curPhotoUrl;
+                        if (System.Environment.Is64BitOperatingSystem)
+                        {
+                            process.StartInfo.Arguments = "rundll32.exe C:\\Windows\\SysWOW64\\shimgvm.dll,ImageView_FullScreen";
+                        }
+                        else
+                        {
+                            process.StartInfo.Arguments = "rundll32.exe C:\\Windows\\System32\\shimgvm.dll,ImageView_FullScreen";
+                        }
 
-                    process.StartInfo.UseShellExecute = true;
-                    process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-                    process.Start();
-                    process.Close();
+                        process.StartInfo.UseShellExecute = true;
+                        process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                        process.Start();
+                        process.Close();
+                    }
+                    catch { }
+                    
                 }
                 
             }

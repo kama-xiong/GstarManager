@@ -10,6 +10,10 @@ using MySqlX.XDevAPI;
 using System.Security.AccessControl;
 using GstarManager.Models;
 using System.Windows.Media.Imaging;
+using Microsoft.Win32;
+using System.Windows.Media;
+using System.Windows.Shapes;
+
 
 namespace GstarManager.PublicFuncs
 {
@@ -163,6 +167,8 @@ namespace GstarManager.PublicFuncs
             }
             return bitmap;
         }
+
+       
 
     }
 }

@@ -138,33 +138,7 @@
                 </TabItem>
                     <TabItem Header="联系人资料">
                         <Grid>
-                            <DockPanel>
-                                <ToolBar Name="ContactToolbar" DockPanel.Dock="Top" Height="32">
-                                    <Button Name="Add" Click="OnCreate" >
-                                        <StackPanel Orientation="Horizontal" >
-                                            <Image Source="/Images/new doc.png" ></Image>
-                                            <TextBlock Margin="3,2,0,0" >新增</TextBlock>
-                                        </StackPanel>
-                                    </Button>
-                                    <Button Name="Retrieve" Click="OnRetrieve">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Image Source="/Images/open alt.png"></Image>
-                                            <TextBlock Margin="3,2,0,0">查看</TextBlock>
-                                        </StackPanel>
-                                    </Button>
-                                    <Button Name="Update" Click="OnUpdate">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Image Source="/Images/Edit.png"></Image>
-                                            <TextBlock Margin="3,2,0,0">修改</TextBlock>
-                                        </StackPanel>
-                                    </Button>
-                                    <Button Name="Delete" Click="OnDelete">
-                                        <StackPanel Orientation="Horizontal">
-                                            <Image Source="/Images/Delete.png"></Image>
-                                            <TextBlock Margin="3,2,0,0">删除</TextBlock>
-                                        </StackPanel>
-                                    </Button>  
-                                </ToolBar>
+                            <DockPanel>                                
                                 <ScrollViewer DockPanel.Dock="Bottom">
                                     <DataGrid Name="dataGridContacts" AutoGenerateColumns="False" SelectionMode="Single"  
                                           MouseDoubleClick="dataGridContacts_MouseDoubleClick" IsReadOnly="True" >

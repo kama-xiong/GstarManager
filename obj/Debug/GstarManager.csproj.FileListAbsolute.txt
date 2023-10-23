@@ -120,3 +120,4 @@ E:\Aiigistar\GstarManager\obj\Debug\Views\Customer\ContactForm.baml
 E:\Aiigistar\GstarManager\bin\Debug\Aliyun.OSS.dll
 E:\Aiigistar\GstarManager\bin\Debug\Aliyun.OSS.pdb
 E:\Aiigistar\GstarManager\bin\Debug\Aliyun.OSS.xml
+E:\Aiigistar\GstarManager\obj\Debug\GstarManager.csproj.SuggestedBindingRedirects.cache
