@@ -389,10 +389,11 @@ namespace GstarManager.Views.So
                     //var fname = System.IO.Path.GetFileName(contact.C_Photo);
                     var extension = System.IO.Path.GetExtension(contact.C_Photo);
                     var filepathname = contact.C_Photo;
-                    contact.C_Photo =string.Format("{0}_{1}{2}",contact.C_Name,DateTime.Now.ToString("yyyy-MM-dd-mm-ss-hh"),extension);
+                    contact.C_Photo = string.Format("{0}_{1}{2}", contact.C_Name, DateTime.Now.ToString("yyyy-MM-dd-mm-ss-hh"), extension);
                     control.Insert(contact);
-                    var objectname = string.Format("manager/object/contact/{0}", contact.C_Photo);                    
-                    Filefuncs.SaveFileToOss(filepathname, objectname);                                      
+                    var objectname = string.Format("manager/object/contact/{0}", contact.C_Photo);
+                    Filefuncs.SaveFileToOss(filepathname, objectname);
+                    
 
                 }catch(Exception ex)
                 {
@@ -401,6 +402,7 @@ namespace GstarManager.Views.So
                 getContacts();
             }
         }
+        
 
         private void OnRetrieveContact(object sender, RoutedEventArgs e)
         {
@@ -447,11 +449,45 @@ namespace GstarManager.Views.So
             form.setMode(2);
             if (form.ShowDialog() == true)
             {
-                var control = new ContactController();
-                var newcontact = form.getData();
-                newcontact.C_Id = curContact.C_Id;
-                newcontact.CustomerId = curContact.CustomerId;
-                control.Update(newcontact);
+                try
+                {
+
+
+                    var control = new ContactController();
+                    var newcontact = form.getData();
+                    newcontact.C_Id = curContact.C_Id;
+                    newcontact.CustomerId = curContact.CustomerId;
+                    if (form.photoIsChanged == true)
+                    {
+                        //需加入删除原有OSS文件
+                        var oldObjectname = string.Format("manager/object/contact/{0}", curContact.C_Photo);
+                        Filefuncs.DeleteFileFromOss(oldObjectname);
+                        //删除本地文件
+                        var localfilename = System.IO.Directory.GetCurrentDirectory() + @"/temp/contact/" + curContact.C_Photo;
+
+                        var extension = System.IO.Path.GetExtension(newcontact.C_Photo);
+                        var filepathname = newcontact.C_Photo;
+                        newcontact.C_Photo = string.Format("{0}_{1}{2}", newcontact.C_Name, DateTime.Now.ToString("yyyy-MM-dd-mm-ss-hh"), extension);
+                        var objectname = string.Format("manager/object/contact/{0}", newcontact.C_Photo);
+                        try
+                        {
+                            System.IO.File.Delete(localfilename);
+                            Filefuncs.SaveFileToOss(filepathname, objectname);
+
+                        }
+                        catch
+                        {
+
+                        }
+
+                        control.Update(newcontact);
+                    }
+                }
+                catch
+                {
+
+                }
+                
                 getContacts();
             }
 

@@ -97,7 +97,6 @@ E:\Aiigistar\GstarManager\bin\Debug\System.Numerics.Vectors.xml
 E:\Aiigistar\GstarManager\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 E:\Aiigistar\GstarManager\bin\Debug\System.Threading.Tasks.Extensions.xml
 E:\Aiigistar\GstarManager\obj\Debug\GstarManager.csproj.AssemblyReference.cache
-E:\Aiigistar\GstarManager\obj\Debug\GstarManager.csproj.SuggestedBindingRedirects.cache
 E:\Aiigistar\GstarManager\obj\Debug\MainWindow.g.cs
 E:\Aiigistar\GstarManager\obj\Debug\Views\Customer\CustomerForm.g.cs
 E:\Aiigistar\GstarManager\obj\Debug\Views\Customer\CustomerManagerPage.g.cs

@@ -23,7 +23,8 @@ namespace GstarManager.Views.Customer
     /// </summary>
     public partial class ContactForm : Window
     {
-        string curPhotoUrl = null;
+        private string curPhotoUrl = null;
+        public bool photoIsChanged = false;
         public string _object_pre = @"manager/object/contact/";
         public string _local_pre = @"\temp\contact\";
         public ContactForm()
@@ -77,9 +78,17 @@ namespace GstarManager.Views.Customer
             {
                 Directory.CreateDirectory(localpath);
             }
-            Filefuncs.DownloadFileFromOss(locafilename, objectname);
-            var bitmap = new BitmapImage(new Uri(locafilename));
-            ContactImage.Source = bitmap;
+            try
+            {
+                Filefuncs.DownloadFileFromOss(locafilename, objectname);
+                var bitmap = new BitmapImage(new Uri(locafilename));
+                ContactImage.Source = bitmap;
+            }
+            catch
+            {
+
+            }
+            
 
         }
         public void setData(Contact contact)
@@ -171,9 +180,12 @@ namespace GstarManager.Views.Customer
                 curPhotoUrl=openfiledialog.FileName;
                 var bitmap = new BitmapImage(new Uri(curPhotoUrl));
                 ContactImage.Source= bitmap;
+                photoIsChanged = true;
                 
             }
         }
+
+
 
         private void Confirm_Click(object sender, RoutedEventArgs e)
         {

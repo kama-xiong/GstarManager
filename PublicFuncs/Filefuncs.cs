@@ -9,18 +9,20 @@ using Aliyun.OSS;
 using MySqlX.XDevAPI;
 using System.Security.AccessControl;
 using GstarManager.Models;
+using System.Windows.Media.Imaging;
 
 namespace GstarManager.PublicFuncs
 {
     public static class Filefuncs
     {
         public static OssSetting _bucket = getBucket(@"E:\Aiigistar\config.ini");
+        public static OssClient _client = new OssClient(_bucket.Endpoint, _bucket.AccessKeyId, _bucket.AccessKeySecret);
         [DllImport("kernel32")]// 读配置文件方法的6个参数：所在的分区（section）、 键值、     初始缺省值、   StringBuilder、  参数长度上限 、配置文件路径
         public static extern long GetPrivateProfileString(string section, string key, string defaultValue, StringBuilder retVal, int size, string filePath);
         [DllImport("kernel32")]//写入配置文件方法的4个参数：  所在的分区（section）、  键值、     参数值、       配置文件路径
         private static extern long WritePrivateProfileString(string section, string key, string value, string filePath);
         /*读配置文件*/
-        public static string GetIniFileValue(string strPath,string section, string key)
+        public static string GetIniFileValue(string strPath, string section, string key)
         {
             // ▼ 获取当前程序启动目录
             //string strPath = "E:\\Aiigistar\\config.ini";
@@ -39,7 +41,7 @@ namespace GstarManager.PublicFuncs
         }
         public static OssSetting getBucket(string settingStrPath)
         {
-            
+
             //string settingStrPath = "E:\\Aiigistar\\config.ini";
             // yourEndpoint填写Bucket所在地域对应的Endpoint。以华东1（杭州）为例，Endpoint填写为https://oss-cn-hangzhou.aliyuncs.com。
             var endpoint = GetIniFileValue(settingStrPath, "OssSetting", "endpoint");
@@ -52,7 +54,7 @@ namespace GstarManager.PublicFuncs
             return set;
         }
         /*写配置文件*/
-        public static void SetIniFileValue(string strPath,string section, string key, string value)
+        public static void SetIniFileValue(string strPath, string section, string key, string value)
         {
             // ▼ 获取当前程序启动目录
             // string strPath = Application.StartupPath + @"/config.ini";  这里是绝对路径
@@ -61,7 +63,7 @@ namespace GstarManager.PublicFuncs
             WritePrivateProfileString(section, key, value, strPath);
         }
 
-        public static bool SaveFileToOss(string localFilename,string objectName)
+        public static bool SaveFileToOss(string localFilename, string objectName)
         {
             //string settingStrPath = "E:\\Aiigistar\\config.ini";
             //// yourEndpoint填写Bucket所在地域对应的Endpoint。以华东1（杭州）为例，Endpoint填写为https://oss-cn-hangzhou.aliyuncs.com。
@@ -75,11 +77,11 @@ namespace GstarManager.PublicFuncs
 
             //// 创建OSSClient实例。
 
-            var client = new OssClient(_bucket.Endpoint, _bucket.AccessKeyId, _bucket.AccessKeySecret);
+            //var client = new OssClient(_bucket.Endpoint, _bucket.AccessKeyId, _bucket.AccessKeySecret);
             try
             {
                 // 上传文件。
-                client.PutObject(_bucket.BucketName, objectName, localFilename);
+                _client.PutObject(_bucket.BucketName, objectName, localFilename);
                 Console.WriteLine("Put object succeeded");
                 return true;
             }
@@ -90,7 +92,22 @@ namespace GstarManager.PublicFuncs
             }
 
         }
-        public static bool DownloadFileFromOss(string localFilename,string objectName)
+        public static bool DeleteFileFromOss(string objectName)
+        {
+            try
+            {
+                // 删除文件。
+                _client.DeleteObject(_bucket.BucketName, objectName);
+                Console.WriteLine("Delete object succeeded");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Delete object failed. {0}", ex.Message);
+                return false;
+            }
+        }
+        public static bool DownloadFileFromOss(string localFilename, string objectName)
         {
             //string settingStrPath = "E:\\Aiigistar\\config.ini";
             //// yourEndpoint填写Bucket所在地域对应的Endpoint。以华东1（杭州）为例，Endpoint填写为https://oss-cn-hangzhou.aliyuncs.com。
@@ -129,8 +146,23 @@ namespace GstarManager.PublicFuncs
                 return false;
             }
 
-        }       
-
+        }
+        public static BitmapImage GetImage(string imagePath)
+        {
+            BitmapImage bitmap = new BitmapImage();
+            if (File.Exists(imagePath))
+            {
+                bitmap.BeginInit();
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                using (Stream ms = new MemoryStream(File.ReadAllBytes(imagePath)))
+                {
+                    bitmap.StreamSource = ms;
+                    bitmap.EndInit();
+                    bitmap.Freeze();
+                }
+            }
+            return bitmap;
+        }
 
     }
 }
