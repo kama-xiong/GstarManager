@@ -24,8 +24,7 @@
                 </MenuItem>
                 <MenuItem Header="数据中心" >
                     <MenuItem Header="初始数据库..." Click="InitialDataBase"/>
-                    <MenuItem Header="OSS Save 测试..." Click="OSS_Save_Testing"/>
-                    
+                    <MenuItem Header="物料主数据" Click="OnMaterialManager"/>
                 </MenuItem>
                 <MenuItem Header="系统" ></MenuItem>
                 

@@ -1,0 +1,34 @@
+﻿<Window x:Class="GstarManager.Views.DataCenter.MaterialForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GstarManager.Views.DataCenter"
+        mc:Ignorable="d"
+        Title="MaterialForm" Height="450" Width="500" FontSize="16">
+    <Grid>
+        <StackPanel Orientation="Vertical" Margin="50,10,50,10">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="类别:" HorizontalContentAlignment="Right" Width="80"/>
+                <ComboBox x:Name="MaterialType" Width="120">
+                    <ComboBoxItem Content="成品"/>
+                    <ComboBoxItem Content="半成品"/>
+                    <ComboBoxItem Content="原材料"/>                    
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Label Content="料号:" HorizontalContentAlignment="Right" Width="80"/>
+                <TextBox x:Name="MaterialCode" Width="200" VerticalContentAlignment="Center" ></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Label Content="物料名称:" HorizontalContentAlignment="Right" Width="80"/>
+                <TextBox x:Name="MaterialName" Width="300" VerticalContentAlignment="Center" ></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Label Content="规格尺寸:" HorizontalContentAlignment="Right" Width="80"/>
+                <TextBox x:Name="Size" Width="200" VerticalContentAlignment="Center" ></TextBox>
+            </StackPanel>
+        </StackPanel>
+        
+    </Grid>
+</Window>

@@ -18,6 +18,7 @@ using GstarManager.Models;
 using SqlSugar;
 using GstarManager.Views.So;
 using GstarManager.Controllers;
+using GstarManager.Views.DataCenter;
 
 namespace GstarManager
 {
@@ -37,7 +38,8 @@ namespace GstarManager
         private void InitialDataBase(object sender, RoutedEventArgs e)
         {
             SqlClient.Db.CodeFirst.InitTables(typeof(Customer),typeof(Contact),typeof(Dictionary));
-            SqlClient.Db.CodeFirst.InitTables(typeof(Country));
+            SqlClient.Db.CodeFirst.InitTables(typeof(Country),typeof(Mould),typeof(MaterialPicture),typeof(Material));
+            SqlClient.Db.CodeFirst.InitTables(typeof(Mould),typeof(MaterialPicture),typeof(Material));
         }
 
         private void SalesOrderManager(object sender, RoutedEventArgs e)
@@ -74,14 +76,9 @@ namespace GstarManager
         {
 
         }
-
-        private void OSS_Save_Testing(object sender, RoutedEventArgs e)
+        private void OnMaterialManager(object sender, RoutedEventArgs e)
         {
-            var setfile = "E:\\Aiigistar\\config.ini";
-            string localfile = "E:\\Aiigistar\\test.txt";
-            string objectname = @"manager/object/test.txt";
-            var result=PublicFuncs.Filefuncs.SaveFileToOss(localfile, objectname);
-            MessageBox.Show(result.ToString());
+            addTabPage("物料管理", new MaterialManagerPage(mainTabControl));
         }
     }
 }

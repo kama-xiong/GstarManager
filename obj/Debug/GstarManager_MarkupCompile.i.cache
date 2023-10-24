@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 E:\Aiigistar\GstarManager\App.xaml
-5930599445
+8-205549817
 
-221233127098
+2783058857
 371563228982
-MainWindow.xaml;Views\Customer\ContactForm.xaml;Views\Customer\CustomerForm.xaml;Views\Customer\CustomerManagerPage.xaml;Views\So\SoManagerPage.xaml;
+MainWindow.xaml;Views\Customer\ContactForm.xaml;Views\Customer\CustomerForm.xaml;Views\Customer\CustomerManagerPage.xaml;Views\DataCenter\MaterialForm.xaml;Views\DataCenter\MaterialManagerPage.xaml;Views\DataCenter\MouldForm.xaml;Views\So\SoManagerPage.xaml;
 
 True
 

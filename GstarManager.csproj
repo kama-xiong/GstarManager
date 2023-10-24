@@ -126,10 +126,12 @@
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\IBaseController.cs" />
+    <Compile Include="Controllers\MaterialController.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Dictionary.cs" />
     <Compile Include="Controllers\Repository.cs" />
+    <Compile Include="Models\Material.cs" />
     <Compile Include="Models\OssSetting.cs" />
     <Compile Include="PublicFuncs\Filefuncs.cs" />
     <Compile Include="SqlClient.cs" />
@@ -141,6 +143,15 @@
     </Compile>
     <Compile Include="Views\Customer\CustomerManagerPage.xaml.cs">
       <DependentUpon>CustomerManagerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataCenter\MaterialForm.xaml.cs">
+      <DependentUpon>MaterialForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataCenter\MaterialManagerPage.xaml.cs">
+      <DependentUpon>MaterialManagerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataCenter\MouldForm.xaml.cs">
+      <DependentUpon>MouldForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\So\SoManagerPage.xaml.cs">
       <DependentUpon>SoManagerPage.xaml</DependentUpon>
@@ -166,6 +177,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Customer\CustomerManagerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DataCenter\MaterialForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DataCenter\MaterialManagerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DataCenter\MouldForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

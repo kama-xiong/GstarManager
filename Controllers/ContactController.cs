@@ -61,10 +61,6 @@ namespace GstarManager.Controllers
             }
                 
         }
-        public bool SaveFileToOss(string filename,Contact contact)
-        {
-            return true;
-
-        }
+       
     }
 }
