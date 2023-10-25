@@ -122,3 +122,8 @@ E:\Aiigistar\GstarManager\bin\Debug\Aliyun.OSS.pdb
 E:\Aiigistar\GstarManager\bin\Debug\Aliyun.OSS.xml
 E:\Aiigistar\GstarManager\obj\Debug\Views\DataCenter\MaterialManagerPage.g.cs
 E:\Aiigistar\GstarManager\obj\Debug\Views\DataCenter\MaterialManagerPage.baml
+E:\Aiigistar\GstarManager\obj\Debug\GstarManager.csproj.SuggestedBindingRedirects.cache
+E:\Aiigistar\GstarManager\obj\Debug\Views\DataCenter\MaterialForm.g.cs
+E:\Aiigistar\GstarManager\obj\Debug\Views\DataCenter\MouldForm.g.cs
+E:\Aiigistar\GstarManager\obj\Debug\Views\DataCenter\MaterialForm.baml
+E:\Aiigistar\GstarManager\obj\Debug\Views\DataCenter\MouldForm.baml

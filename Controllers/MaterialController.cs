@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GstarManager.Models;
+using SqlSugar;
 
 namespace GstarManager.Controllers
 {
@@ -21,7 +22,17 @@ namespace GstarManager.Controllers
 
         public List<Material> GetPageList(int pagenumber, int pagesize, ref int totalcount, string sort)
         {
-            throw new NotImplementedException();
+            if (sort.ToLower() == "desc")
+            {
+               return SqlClient.Db.Queryable<Material>().Includes(x => x.Mould)
+                    .Includes(y=>y.MaterialPictures).OrderBy(it => it.Id, OrderByType.Desc).ToPageList(pagenumber, pagesize, ref totalcount);
+                
+            }
+            else
+            {
+                return SqlClient.Db.Queryable<Material>().Includes(x => x.Mould)
+                    .Includes(y => y.MaterialPictures).OrderBy(it => it.Id, OrderByType.Asc).ToPageList(pagenumber, pagesize, ref totalcount);
+            }
         }
 
         public List<Material> Search(string search, int pagenumber, int pagesize, ref int totalcount, string sort)
@@ -33,5 +44,6 @@ namespace GstarManager.Controllers
         {
             throw new NotImplementedException();
         }
+        
     }
 }

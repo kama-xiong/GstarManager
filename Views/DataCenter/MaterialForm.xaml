@@ -5,30 +5,73 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GstarManager.Views.DataCenter"
         mc:Ignorable="d"
-        Title="MaterialForm" Height="450" Width="500" FontSize="16">
+        Title="MaterialForm" Height="540" Width="800" FontSize="16">
     <Grid>
-        <StackPanel Orientation="Vertical" Margin="50,10,50,10">
+        <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Horizontal">
-                <Label Content="类别:" HorizontalContentAlignment="Right" Width="80"/>
-                <ComboBox x:Name="MaterialType" Width="120">
-                    <ComboBoxItem Content="成品"/>
-                    <ComboBoxItem Content="半成品"/>
-                    <ComboBoxItem Content="原材料"/>                    
-                </ComboBox>
+                <StackPanel Orientation="Vertical" Margin="20,10,10,50" Width="400">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="类别:" HorizontalContentAlignment="Right" Width="80" />
+                        <ComboBox x:Name="MaterialType" Width="120" SelectedIndex="0">
+                            <ComboBoxItem Content="成品"/>
+                            <ComboBoxItem Content="半成品"/>
+                            <ComboBoxItem Content="原材料"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0" >
+                        <Label Content="料号:" HorizontalContentAlignment="Right" Width="80"/>
+                        <TextBox x:Name="MaterialCode" Width="200" VerticalContentAlignment="Center" ></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        <Label Content="物料名称:" HorizontalContentAlignment="Right" Width="80"/>
+                        <TextBox x:Name="MaterialName" Width="300" VerticalContentAlignment="Center" ></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        <Label Content="规格尺寸:" HorizontalContentAlignment="Right" Width="80"/>
+                        <TextBox x:Name="Size" Width="200" VerticalContentAlignment="Center" ></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        <Label Content="单位:" HorizontalContentAlignment="Right" Width="80"/>
+                        <ComboBox x:Name="Unit" Width="60" VerticalContentAlignment="Center" SelectedIndex="0">
+                            <ComboBoxItem Content="个"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        <Label Content="内座:" HorizontalContentAlignment="Right" Width="80"/>
+                        <TextBox x:Name="Inner" Width="100" VerticalContentAlignment="Center" ></TextBox>
+                        <Button x:Name="InnerSelectButton" Width="40" VerticalContentAlignment="Center" Content="..." Margin="2,2,0,0"></Button>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        <Label Content="材质:" HorizontalContentAlignment="Right" Width="80"/>
+                        <TextBox x:Name="CombMaterial" Width="300" VerticalContentAlignment="Center" ></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        <Label Content="颜色:" HorizontalContentAlignment="Right" Width="80"/>
+                        <TextBox x:Name="Color" Width="200" VerticalContentAlignment="Center" ></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        <Label Content="模具编号:" HorizontalContentAlignment="Right" Width="80"/>
+                        <TextBox x:Name="MoldCode" Width="150" VerticalContentAlignment="Center" IsReadOnly="True"></TextBox>
+                        <Button x:Name="MoldSelectButton" Width="30" VerticalContentAlignment="Center" Content="..." Margin="2,2,0,0"></Button>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Width="340" Margin="10" Orientation="Vertical">
+                    <ListBox x:Name="MaterialPics" Margin="5" Height="350"></ListBox>
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="AddPic" Content="新增" Margin="125,0,0,0" Width="50" Click="AddNewPicture"/>
+                        <Button x:Name="DelPic" Content="删除" Margin="10,0,0,0" Width="50" Click="DeletePicture"/>
+                    </StackPanel>
+                </StackPanel>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                <Label Content="料号:" HorizontalContentAlignment="Right" Width="80"/>
-                <TextBox x:Name="MaterialCode" Width="200" VerticalContentAlignment="Center" ></TextBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                <Label Content="物料名称:" HorizontalContentAlignment="Right" Width="80"/>
-                <TextBox x:Name="MaterialName" Width="300" VerticalContentAlignment="Center" ></TextBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                <Label Content="规格尺寸:" HorizontalContentAlignment="Right" Width="80"/>
-                <TextBox x:Name="Size" Width="200" VerticalContentAlignment="Center" ></TextBox>
+            <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                <Button x:Name="Confirm" Content="确定" Height="35" Width="100" Margin="540,0,0,0" Click="OnConfirm"></Button>
+                <Button x:Name="Cancel" Content="取消" Height="35" Width="100" Margin="15,0,0,0" Click="OnCancel"></Button>
+                    
             </StackPanel>
         </StackPanel>
+       
+       
+        
         
     </Grid>
 </Window>

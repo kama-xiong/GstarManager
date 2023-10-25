@@ -127,6 +127,7 @@
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\IBaseController.cs" />
     <Compile Include="Controllers\MaterialController.cs" />
+    <Compile Include="Controllers\MouldController.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Dictionary.cs" />
