@@ -63,7 +63,7 @@ namespace GstarManager.Views.So
         /// </summary>
         private void setComboLookFor()
         {
-            var items=_control.getDictionary("combo_lookfor");
+            var items=_control.getDictionary("customer","Combo_lookFor");
             for(int i=0; i<items.Count; i++)
             {
                 

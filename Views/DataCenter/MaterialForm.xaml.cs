@@ -23,6 +23,7 @@ namespace GstarManager.Views.DataCenter
     {
         private int curMaterialId = 0;        
         private int curMoldId = 0;
+        private string curMouldCode;
 
         public MaterialForm()
         {
@@ -38,7 +39,10 @@ namespace GstarManager.Views.DataCenter
             Unit.Text = material.Unit;
             Color.Text = material.Color;
             CombMaterial.Text = material.CombMaterial;
-            MoldCode.Text = material.Mould.MouldCode;
+            if (material.Mould != null)
+            {
+                MoldCode.Text = material.Mould.MouldCode;
+            }            
             curMaterialId=material.Id;
         }
         public Material GetData()
@@ -54,6 +58,7 @@ namespace GstarManager.Views.DataCenter
             material.Color = Color.Text;
             material.CombMaterial = CombMaterial.Text;
             material.MouldId = curMoldId;
+            material.MouldCode = curMouldCode;
             return material;
         }
         private Mould GetMould(int moldid)
@@ -121,6 +126,11 @@ namespace GstarManager.Views.DataCenter
         }
 
         private void DeletePicture(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnSelectMould(object sender, RoutedEventArgs e)
         {
 
         }

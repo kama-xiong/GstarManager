@@ -1,4 +1,5 @@
-﻿using SqlSugar;
+﻿using GstarManager.Models;
+using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,10 @@ namespace GstarManager.Controllers
             //    SqlSugarHelper.Db.AddConnection(new ConnectionConfig() { 数据库读出来信息 });
             //}
             //base.Context = SqlSugarHelper.Db.GetConnectionScope("用户读出来的数据库ConfigId");
+        }
+        public List<Dictionary> getDictionary(string tablename, string controlName)
+        {
+            return SqlClient.Db.Queryable<Models.Dictionary>().Where(it => (it.TableName == tablename) && it.ControlName == controlName).ToList();
         }
     }
     

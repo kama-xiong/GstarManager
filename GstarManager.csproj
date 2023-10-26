@@ -135,6 +135,7 @@
     <Compile Include="Models\Material.cs" />
     <Compile Include="Models\OssSetting.cs" />
     <Compile Include="PublicFuncs\Filefuncs.cs" />
+    <Compile Include="Seeds\SeedService.cs" />
     <Compile Include="SqlClient.cs" />
     <Compile Include="Views\Customer\ContactForm.xaml.cs">
       <DependentUpon>ContactForm.xaml</DependentUpon>

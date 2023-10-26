@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GstarManager.Views.Customer"
         mc:Ignorable="d"
-        Title="CustomerForm" Height="560" Width="530" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" FontSize="14">
+        Title="CustomerForm" Height="560" Width="530" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" >
     <Grid>       
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Vertical" Margin="5,15,5,5">

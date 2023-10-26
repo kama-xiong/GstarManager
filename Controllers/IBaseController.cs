@@ -14,7 +14,7 @@ namespace GstarManager.Controllers
         List<T> Search(string search,int pagenumber,int pagesize,ref int totalcount,string sort);        
         List<T> SearchByField(string fieldname,string search, int pagenumber, int pagesize, ref int totalcount,string sort);        
         int GetCount();
-        List<Models.Dictionary> getDictionary(string controlName);
+        
 
     }
 }

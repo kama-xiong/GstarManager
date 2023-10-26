@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:GstarManager.Views.So" 
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="1000"
-      Title="CustomerManagerPage" FontSize="14">
+      Title="CustomerManagerPage" >
 
     <Grid>
         <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" >          

@@ -80,5 +80,16 @@ namespace GstarManager
         {
             addTabPage("物料管理", new MaterialManagerPage(mainTabControl));
         }
+
+        private void OnMouseDoubleClick_MaterialManager(object sender, MouseButtonEventArgs e)
+        {
+
+            addTabPage("物料管理", new MaterialManagerPage(mainTabControl));
+        }
+
+        private void InitialDictionary(object sender, RoutedEventArgs e)
+        {
+            Seeds.SeedService.setSeeds();
+        }
     }
 }

@@ -42,10 +42,7 @@ namespace GstarManager.Controllers
             }
             
         }
-        public List<Dictionary> getDictionary(string controlName)
-        {
-            return SqlClient.Db.Queryable<Models.Dictionary>().Where(it => (it.TableName == "Customer" || it.TableName == "customer")&&it.ControlName==controlName).ToList();
-        }
+        
 
         public List<Customer> GetPageList(int pagenumber,int pagesize,ref int totalcount,string sort)
         {
@@ -103,15 +100,19 @@ namespace GstarManager.Controllers
         {
             if (sort.ToLower() == "desc")
             {
-                var sqlstr = string.Format("select Customer.*,Contact.* from Customer left join Contact on Id=Contact.CustomerId where {0} like '%{1}%' order by id desc", fieldname, search);
-                List<Customer> list = SqlClient.Db.SqlQueryable<Customer>(sqlstr).ToPageList(pagenumber, pagesize, ref totalcount);
+                //var sqlstr = string.Format("select Customer.*,Contact.* from Customer left join Contact on Id=Contact.CustomerId where {0} like '%{1}%' order by id desc", fieldname, search);
+                var sqlstr = string.Format("select * from Customer  where {0} like '%{1}%' order by id desc", fieldname, search);
+                List<Customer> list = SqlClient.Db.SqlQueryable<Customer>(sqlstr).Includes(x=>x.Contacts).ToPageList(pagenumber, pagesize, ref totalcount);
+
                 Console.WriteLine(sqlstr);
                 return list;
             }
             else
             {
-                var sqlstr = string.Format("select Customer.*,Contact.* from Customer left join Contact on Id=Contact.CustomerId where {0} like '%{1}%' order by id asc", fieldname, search);
-                List<Customer> list = SqlClient.Db.SqlQueryable<Customer>(sqlstr).ToPageList(pagenumber, pagesize, ref totalcount);
+                //var sqlstr = string.Format("select Customer.*,Contact.* from Customer left join Contact on Id=Contact.CustomerId where {0} like '%{1}%' order by id desc", fieldname, search);
+                var sqlstr = string.Format("select * from Customer  where {0} like '%{1}%' order by id asc", fieldname, search);
+                List<Customer> list = SqlClient.Db.SqlQueryable<Customer>(sqlstr).Includes(x => x.Contacts).ToPageList(pagenumber, pagesize, ref totalcount);
+
                 Console.WriteLine(sqlstr);
                 return list;
 

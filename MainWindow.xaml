@@ -24,6 +24,8 @@
                 </MenuItem>
                 <MenuItem Header="数据中心" >
                     <MenuItem Header="初始数据库..." Click="InitialDataBase"/>
+                    <MenuItem Header="初始化字典数据..." Click="InitialDictionary"/>
+                    <Separator/>
                     <MenuItem Header="物料主数据" Click="OnMaterialManager"/>
                 </MenuItem>
                 <MenuItem Header="系统" ></MenuItem>
@@ -40,7 +42,8 @@
                     <TreeViewItem Header="报表"/>
                 </TreeViewItem>
                 <TreeViewItem Header="数据中心">
-                    
+                    <TreeViewItem Header="物料主数据" MouseDoubleClick="OnMouseDoubleClick_MaterialManager"/>
+
                 </TreeViewItem>
             </TreeView>
 

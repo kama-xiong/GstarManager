@@ -28,6 +28,11 @@ namespace GstarManager.Models
         public string CombMaterial { get; set; }
         [SugarColumn(Length = 60, IsNullable = true)]
         public string Color { get; set; }
+        /// <summary>
+        /// MouldCode 用于查询参考数据，便于搜索
+        /// </summary>
+        [SugarColumn(Length = 10, IsNullable = true)]
+        public string MouldCode { get; set; }
         public int MouldId { get; set; }
         [Navigate(NavigateType.OneToOne,nameof(MouldId))]
         public Mould Mould { get; set; }
@@ -38,7 +43,7 @@ namespace GstarManager.Models
     public class MaterialPicture
     {
         [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
-        public int Id { get; set; }
+        public int MPicId { get; set; }
         public bool IsMain { get; set; }
         public bool isInner { get; set; }
         [SugarColumn(Length =100, IsNullable = true)]
@@ -50,7 +55,7 @@ namespace GstarManager.Models
     public class Mould
     {
         [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
-        public int Id { get; set; }
+        public int MouldId { get; set; }
         [SugarColumn(Length = 10, IsNullable = true)]
         public string MouldBigType { get; set; }//模具大分类 如塑胶模，五金模，吸塑模
         [SugarColumn(Length = 20, IsNullable = true)]

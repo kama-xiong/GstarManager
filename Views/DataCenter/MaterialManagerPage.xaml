@@ -128,11 +128,11 @@
                                         <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="80" Visibility="Hidden"/>
                                         <DataGridTextColumn Header="类别" Binding="{Binding MType}" Width="60"/>
                                         <DataGridTextColumn Header="物料号" Binding="{Binding MCode}" Width="100"/>
-                                        <DataGridTextColumn Header="物料名称" Binding="{Binding MName}" Width="150"/>
-                                        <DataGridTextColumn Header="规格尺寸" Binding="{Binding Size}" Width="100"/>
-                                        <DataGridTextColumn Header="颜色" Binding="{Binding Color}" Width="100"/>
-                                        <DataGridTextColumn Header="内玉" Binding="{Binding Inner}" Width="80"/>
-                                        <DataGridTextColumn Header="材质" Binding="{Binding CombMaterial}" Width="100"/>
+                                        <DataGridTextColumn Header="物料名称" Binding="{Binding MName}" Width="250"/>
+                                        <DataGridTextColumn Header="规格尺寸" Binding="{Binding Size}" Width="150"/>
+                                        <DataGridTextColumn Header="颜色" Binding="{Binding Color}" Width="150"/>
+                                        <DataGridTextColumn Header="内玉" Binding="{Binding Inner}" Width="100"/>
+                                        <DataGridTextColumn Header="材质" Binding="{Binding CombMaterial}" Width="300"/>
                                         <DataGridTextColumn Header="MouldId" Binding="{Binding MouldId}" Width="100" Visibility="Hidden"/>
                                         <DataGridTextColumn Header="模具号" Binding="{Binding MouldCode}" Width="*"/>
                                     </DataGrid.Columns>
